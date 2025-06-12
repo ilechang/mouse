@@ -1,0 +1,20 @@
+body, html, #root {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+  }
+  
+  .container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo {
+    width: 200px;
+    transition: none;
+    will-change: transform, opacity;
+  }
+  
