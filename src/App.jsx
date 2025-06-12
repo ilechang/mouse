@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import './index.css'
-import logo from '/images/vlogo.png'
+import logo from '/images/vlogo.webp'
 
 function App() {
   const imgRef = useRef(null)
@@ -8,7 +8,7 @@ function App() {
   const isZoomedRef = useRef(false)
 
   const minScale = 4
-  const maxScale = 12
+  const maxScale = 60
   const duration = 600 // ms
 
   useEffect(() => {
