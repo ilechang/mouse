@@ -1,0 +1,1305 @@
+
+import { useRef, useState, useEffect } from "react";
+import { Button, Form, Card, InputGroup } from "react-bootstrap";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+
+
+function TypingText({ text, speed = 50 }) {
+    const [displayed, setDisplayed] = useState("");
+    const [isFinished, setIsFinished] = useState(false);
+    const bufferRef = useRef("");
+
+    useEffect(() => {
+        let i = 0;
+        const chars = text.split("");
+        let interval;
+
+        bufferRef.current = "";
+        setDisplayed("");
+        setIsFinished(false);
+
+        interval = setInterval(() => {
+            if (i < chars.length) {
+                bufferRef.current += chars[i];
+                setDisplayed(bufferRef.current);
+                i++;
+            } else {
+                clearInterval(interval);
+                setIsFinished(true);
+            }
+        }, speed);
+
+        return () => clearInterval(interval);
+    }, [text, speed]);
+
+    return (
+        <div>
+            <p
+                className="text-white  lh-base font-monospace mb-1"
+                style={{ whiteSpace: "pre-wrap", wordBreak: "break-word", fontSize: "0.8rem" }}
+            >
+                {displayed}
+            
+            </p>
+            {isFinished && <p className="text-success font-monospace">✔️ Done</p>}
+        </div>
+    );
+}
+
+export function AiSimulation() {
+    const [text, setText] = useState("");
+    const [speed, setSpeed] = useState(10);
+    const [activeBtn, setActiveBtn] = useState(null); // ➤ 新增狀態：目前哪顆按鈕被按
+    const userInteractedRef = useRef(false);
+
+    const imgRef = useRef(null);
+    const btnContainerRef = useRef(null);
+    const cardRef = useRef(null);
+    const btnRefs = useRef([]);
+    const triggerImgRef = useRef(null);
+    btnRefs.current = [];
+
+    const setBtnRef = (el) => {
+        if (el && !btnRefs.current.includes(el)) {
+            btnRefs.current.push(el);
+        }
+    };
+
+    const handlePrompt = (type) => {
+        if (type === "accept") {
+            setText(`Dear HR,
+Thank you very much for offering me the position at ABC Design. I’m happy to accept the offer and look forward to contributing to the team.
+
+Best regards,  
+Ilia Chang
+  `);
+        } else if (type === "decline") {
+            setText(`Dear HR, 
+Thank you very much for the opportunity and for offering me the position at ABC Design. After careful consideration, I’ve decided to pursue another opportunity that aligns better with my current goals.
+
+I truly appreciate the time and effort your team invested throughout the process, and I wish you all continued success.
+          
+Best regards,  
+Ilia Chang`);
+        } else if (type === "translate") {
+            const raw = `張先生您好, 
+我們謹向您提案擔任 ABC Design 的資深設計師職位，任職日期為 2026 年 3 月 1 日。
+本職位的年薪為 11,000 美元，將以月薪形式支付。
+工作形式為混合制，每週一與週三需到公司出勤，其餘日子則可遠端工作。
+若您接受本提案，敬請回覆本郵件。我們將另行提供入職手續的詳細資訊。
+關於雇用條件與福利等詳情，請參閱附件中的聘用合約書。
+我們誠摯期待您加入 ABC Design。
+
+John Doe
+人事部
+ABC Design
+`;
+            setText(raw);
+        }
+    };
+
+    useEffect(() => {
+        if (imgRef.current && cardRef.current) {
+            // 設定初始狀態：往右下偏移、縮小、透明
+            gsap.set(cardRef.current, {
+                opacity: 0,
+                y: 20,
+                x: 20,
+                scale: 0.8,
+                transformOrigin: "bottom right",
+            });
+
+
+ 
+
+
+    
+            // 設定按鈕初始狀態
+            btnRefs.current.forEach((btn) =>
+                gsap.set(btn, { opacity: 0, y: 10 })
+            );
+    
+            // 建立 scroll trigger
+            ScrollTrigger.create({
+                trigger: imgRef.current,
+                start: "bottom bottom",
+                onEnter: () => {
+
+
+                    gsap.to(triggerImgRef.current, {
+                        delay: 0.8,
+                        opacity: 1,
+                        duration: 0.001,
+                        ease: "none",
+                    });
+
+
+                    // 卡片動畫：淡入 + 滑動 + 放大
+                    gsap.to(cardRef.current, {
+                        delay: 0.8,
+                        opacity: 1,
+                        y: 0,
+                        x: 0,
+                        scale: 1,
+                        duration: 0.6,
+                        ease: "power2.out",
+                    // 在卡片出現後開始動畫
+                    onComplete: () => {
+                        const tl = gsap.timeline();
+                      
+                        if (btnContainerRef.current) {
+                          tl.set(btnContainerRef.current, {
+                            visibility: "visible",
+                            height: "auto",      // ✅ 撐開高度
+                          });
+                        }
+                      
+                        btnRefs.current.forEach((btn, index) => {
+                          tl.fromTo(
+                            btn,
+                            { opacity: 0, y: 10 },
+                            {
+                              opacity: 1,
+                              y: 0,
+                              duration: 0.4,
+                              ease: "power2.out",
+                            },
+                            index === 0 ? "+=0.1" : "+=0.01"
+                          );
+                        });
+                      
+                        // 保留你的延遲觸發自動點擊邏輯
+                        setTimeout(() => {
+                          if (userInteractedRef.current) return;
+                      
+                          const acceptBtn = btnRefs.current[0];
+                          if (acceptBtn) {
+                            gsap.fromTo(
+                              acceptBtn,
+                              { scale: 1, opacity: 1 },
+                              {
+                                scale: 1,
+                                opacity: 0.5,
+                                duration: 0.1,
+                                ease: "power2.out",
+                                yoyo: true,
+                                repeat: 1,
+                                onComplete: () => {
+                                  setActiveBtn("accept");
+                                  handlePrompt("accept");
+                                },
+                              }
+                            );
+                          } else {
+                            setActiveBtn("accept");
+                            handlePrompt("accept");
+                          }
+                        }, 3000);
+                      }
+                      ,
+                    });
+                },
+            });
+        }
+    }, []);
+    
+
+
+    return (
+        <div className="vh-100 bg-dark d-flex align-items-center">
+            <div
+                className="w-100 px-5 d-flex flex-wrap justify-content-center"
+                style={{
+                    gap: "0px",
+                    rowGap: "20px", // vertical gap when stacked
+                }}
+            >
+{/* Small window */}
+<div
+  style={{
+    transform: "perspective(1200px) rotateX(10deg) rotateY(35deg) scale(0.85)",
+    transformStyle: "preserve-3d",
+    transition: "transform 0.6s ease-out",
+    flex: "1 1 300px",
+    maxWidth: "700px",
+  }}
+  className="d-flex justify-content-center"
+>
+  <div style={{ position: "relative", width: "100%" }} className="mt-auto mb-5">
+    <img
+      src="./word.jpg"
+      alt="word screenshot"
+      className="rounded mt-auto shadow"
+      style={{
+        width: "100%",
+        pointerEvents: "none",
+        display: "block",
+      }}
+    />
+
+    {/* ✅ Word視窗模擬AI卡片，貼齊右下角 */}
+    <Card
+      className="position-absolute text-white"
+      style={{
+        bottom: "0.4rem",
+        right: "1rem",
+        width: "250px",
+        backgroundColor: "rgb(51,51,51)",
+        display: "flex",
+        flexDirection: "column",
+        maxHeight: "100%",
+        zIndex: 100,
+        transform: "none", // 無偏移，直接對齊
+        opacity: 1,
+        pointerEvents: "auto",
+      }}
+    >
+      <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
+        <span className="small">Word's AI Helper</span>
+        <span style={{ cursor: "pointer" }}>×</span>
+      </Card.Header>
+
+      <div
+  style={{
+    overflowY: "auto",
+    flexGrow: 1,
+    fontSize: "0.75rem", // ✅ 整體縮小字體
+    pointerEvents: "none", // ✅ 禁用所有互動
+   
+  }}
+>
+  <Card.Body>
+    <Card.Title className="fs-6">Need help with your document?</Card.Title>
+
+    <InputGroup className="mb-3">
+      <Form.Control
+        placeholder="Summarize this paragraph..."
+        className="bg-dark text-white border-0 font-monospace"
+        readOnly // ✅ 輸入欄也不可輸入（保險用）
+      />
+      <Button variant="secondary" disabled>💡</Button>
+    </InputGroup>
+
+    <p className="small mb-1">Suggested Prompts:</p>
+    <div className="d-flex flex-wrap gap-2 mb-3">
+      <Button size="sm" className="rounded-pill px-3" variant="secondary"   style={{
+    fontSize: "0.75rem", // ✅ 整體縮小字體
+  }}>
+        Fix grammar
+      </Button>
+      <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+    fontSize: "0.75rem", // ✅ 整體縮小字體
+  }}>
+        Make it longer
+      </Button>
+      <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+    fontSize: "0.75rem", // ✅ 整體縮小字體
+  }}>
+        Make it shorter
+      </Button>
+      <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+    fontSize: "0.75rem", // ✅ 整體縮小字體
+  }}>
+        Sum up
+      </Button>
+      <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+    fontSize: "0.75rem", // ✅ 整體縮小字體
+  }}>
+        Translate / 翻譯
+      </Button>
+    </div>
+  </Card.Body>
+</div>
+    </Card>
+    <img
+  
+  src="./top.png"
+  alt="trigger base"
+  style={{
+    position: "absolute",
+    bottom: "0.1rem",
+    right: "0.1rem",
+    width: "36px",
+    opacity: 1,
+    zIndex: 999, // < 卡片的 zIndex: 100
+    pointerEvents: "none",
+  }}
+/>
+    
+  </div>
+</div>
+
+
+          {/* Large window - 統一 transform 區塊 */}
+          <div
+  style={{
+    flex: "1 1 400px",
+    maxWidth: "1000px",
+    perspective: "1200px",
+    transformStyle: "preserve-3d",
+    transition: "transform 0.6s ease-out",
+  }}
+  className="d-flex justify-content-center me-2"
+>
+  <div
+    style={{
+      transform: "rotateX(10deg) rotateY(-15deg)",
+      transformStyle: "preserve-3d",
+      position: "relative",
+      width: "100%",
+    }}
+  >
+    <img
+      ref={imgRef}
+      src="./email.jpg"
+      alt="email screenshot"
+      className="rounded shadow"
+      style={{
+        width: "100%",
+        display: "block",
+        pointerEvents: "none",
+      }}
+    />
+
+
+    {/* ✅ AI Chat Window Card */}
+    <Card
+      ref={cardRef}
+      className="position-absolute text-white"
+      style={{
+        bottom: 0,
+        right: 0,
+        width: "320px",
+        backgroundColor: "rgb(51,51,51)",
+        margin: "1rem",
+        display: "flex",
+        flexDirection: "column",
+        maxHeight: "90%",
+        zIndex: 100, // ⬆ 在 top.png 之上
+        transform: "translateX(100px)", // 👈 初始從右邊滑入
+        opacity: 0, // 👈 初始透明，等待動畫出現
+        pointerEvents: "auto",
+      }}
+    >
+      <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
+        <span className="small">Mouse’s AI Chat Window</span>
+        <span style={{ cursor: "pointer" }}>×</span>
+      </Card.Header>
+
+      <div style={{ overflowY: "auto", flexGrow: 1 }}>
+      <Card.Body>
+  <Card.Title className="fs-6">How may I help you?</Card.Title>
+
+  <InputGroup className="mb-3">
+    <Form.Control
+      placeholder="Ask me anything..."
+      className="bg-dark text-white border-0 font-monospace"
+    />
+    <Button variant="secondary">⬆️</Button>
+  </InputGroup>
+
+
+  <p className="small mb-1">Suggested Prompts:</p>
+<div
+  className="d-flex flex-wrap gap-2 mb-3"
+  ref={el => (btnContainerRef.current = el)} // <== 你要加這個
+  style={{
+    visibility: "hidden", // ✅ 不佔空間
+    height: 0,             // ✅ 不撐開高度
+    overflow: "hidden",
+  }}
+>
+  <Button
+    ref={setBtnRef}
+    variant={activeBtn === "accept" ? "dark" : "secondary"}
+    size="sm"
+    className={`rounded-pill px-3 ${
+      activeBtn === "accept" ? "border border-white" : ""
+    }`}
+    onClick={() => {
+      userInteractedRef.current = true;
+      setActiveBtn("accept");
+      handlePrompt("accept");
+    }}
+  >
+    Write Acceptance Email
+  </Button>
+
+  <Button
+    ref={setBtnRef}
+    variant={activeBtn === "decline" ? "dark" : "secondary"}
+    size="sm"
+    className={`rounded-pill px-3 ${
+      activeBtn === "decline" ? "border border-white" : ""
+    }`}
+    onClick={() => {
+      userInteractedRef.current = true;
+      setActiveBtn("decline");
+      handlePrompt("decline");
+    }}
+  >
+    Write Decline Email
+  </Button>
+
+  <Button
+    ref={setBtnRef}
+    variant={activeBtn === "translate" ? "dark" : "secondary"}
+    size="sm"
+    className={`rounded-pill px-3 ${
+      activeBtn === "translate" ? "border border-white" : ""
+    }`}
+    onClick={() => {
+      userInteractedRef.current = true;
+      setActiveBtn("translate");
+      handlePrompt("translate");
+    }}
+  >
+    Translate / 翻譯
+  </Button>
+</div>
+
+
+  {/* ✅ AI回應打字效果 */}
+  {text && <TypingText text={text} speed={speed} />}
+</Card.Body>
+      </div>
+    </Card>
+
+    <img
+  ref={triggerImgRef}
+  src="./top.png"
+  alt="trigger base"
+  style={{
+    position: "absolute",
+    bottom: "0.1rem",
+    right: "0.1rem",
+    width: "48px",
+    opacity: 0,
+    zIndex: 999, // < 卡片的 zIndex: 100
+    pointerEvents: "none",
+  }}
+/>
+  </div>
+</div>
+
+
+            </div>
+        </div>
+
+    );
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useRef, useState, useEffect } from "react";
+// import { Button, Form, Card, InputGroup } from "react-bootstrap";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+
+
+// function TypingText({ text, speed = 50 }) {
+//     const [displayed, setDisplayed] = useState("");
+//     const [isFinished, setIsFinished] = useState(false);
+//     const bufferRef = useRef("");
+
+//     useEffect(() => {
+//         let i = 0;
+//         const chars = text.split("");
+//         let interval;
+
+//         bufferRef.current = "";
+//         setDisplayed("");
+//         setIsFinished(false);
+
+//         interval = setInterval(() => {
+//             if (i < chars.length) {
+//                 bufferRef.current += chars[i];
+//                 setDisplayed(bufferRef.current);
+//                 i++;
+//             } else {
+//                 clearInterval(interval);
+//                 setIsFinished(true);
+//             }
+//         }, speed);
+
+//         return () => clearInterval(interval);
+//     }, [text, speed]);
+
+//     return (
+//         <div>
+//             <p
+//                 className="text-white  lh-base font-monospace mb-1"
+//                 style={{ whiteSpace: "pre-wrap", wordBreak: "break-word", fontSize: "0.8rem" }}
+//             >
+//                 {displayed}
+            
+//             </p>
+//             {isFinished && <p className="text-success font-monospace">✔️ Done</p>}
+//         </div>
+//     );
+// }
+
+// export function AiSimulation() {
+//     const [text, setText] = useState("");
+//     const [speed, setSpeed] = useState(10);
+//     const [activeBtn, setActiveBtn] = useState(null); // ➤ 新增狀態：目前哪顆按鈕被按
+//     const userInteractedRef = useRef(false);
+
+//     const imgRef = useRef(null);
+//     const cardRef = useRef(null);
+//     const btnRefs = useRef([]);
+//     const triggerImgRef = useRef(null);
+//     btnRefs.current = [];
+
+//     const setBtnRef = (el) => {
+//         if (el && !btnRefs.current.includes(el)) {
+//             btnRefs.current.push(el);
+//         }
+//     };
+
+//     const handlePrompt = (type) => {
+//         if (type === "accept") {
+//             setText(`Dear HR,
+// Thank you very much for offering me the position at ABC Design. I’m happy to accept the offer and look forward to contributing to the team.
+
+// Best regards,  
+// Ilia Chang
+//   `);
+//         } else if (type === "decline") {
+//             setText(`Dear HR, 
+// Thank you very much for the opportunity and for offering me the position at ABC Design. After careful consideration, I’ve decided to pursue another opportunity that aligns better with my current goals.
+
+// I truly appreciate the time and effort your team invested throughout the process, and I wish you all continued success.
+          
+// Best regards,  
+// Ilia Chang`);
+//         } else if (type === "translate") {
+//             const raw = `張先生您好, 
+// 我們謹向您提案擔任 ABC Design 的資深設計師職位，任職日期為 2026 年 3 月 1 日。
+// 本職位的年薪為 11,000 美元，將以月薪形式支付。
+// 工作形式為混合制，每週一與週三需到公司出勤，其餘日子則可遠端工作。
+// 若您接受本提案，敬請回覆本郵件。我們將另行提供入職手續的詳細資訊。
+// 關於雇用條件與福利等詳情，請參閱附件中的聘用合約書。
+// 我們誠摯期待您加入 ABC Design。
+
+// John Doe
+// 人事部
+// ABC Design
+// `;
+//             setText(raw);
+//         }
+//     };
+
+//     useEffect(() => {
+//         if (imgRef.current && cardRef.current) {
+//             // 設定初始狀態：往右下偏移、縮小、透明
+//             gsap.set(cardRef.current, {
+//                 opacity: 0,
+//                 y: 20,
+//                 x: 20,
+//                 scale: 0.8,
+//                 transformOrigin: "bottom right",
+//             });
+
+
+ 
+
+
+    
+//             // 設定按鈕初始狀態
+//             btnRefs.current.forEach((btn) =>
+//                 gsap.set(btn, { opacity: 0, y: 10 })
+//             );
+    
+//             // 建立 scroll trigger
+//             ScrollTrigger.create({
+//                 trigger: imgRef.current,
+//                 start: "bottom bottom",
+//                 onEnter: () => {
+
+
+//                     gsap.to(triggerImgRef.current, {
+//                         delay: 0.8,
+//                         opacity: 1,
+//                         duration: 0.001,
+//                         ease: "none",
+//                     });
+
+
+//                     // 卡片動畫：淡入 + 滑動 + 放大
+//                     gsap.to(cardRef.current, {
+//                         delay: 0.8,
+//                         opacity: 1,
+//                         y: 0,
+//                         x: 0,
+//                         scale: 1,
+//                         duration: 0.6,
+//                         ease: "power2.out",
+//                         onComplete: () => {
+//                             const tl = gsap.timeline();
+//                             // 按鈕依序顯示
+//                             btnRefs.current.forEach((btn, index) => {
+//                                 tl.to(
+//                                     btn,
+//                                     {
+//                                         opacity: 1,
+//                                         y: 0,
+//                                         duration: 0.4,
+//                                         ease: "power2.out",
+//                                     },
+//                                     index === 0 ? "+=0.1" : "+=0.01"
+//                                 );
+//                             });
+
+                            
+    
+//                             // ⏱ 自動觸發（如果使用者沒互動）
+//                             setTimeout(() => {
+//                                 if (userInteractedRef.current) return;
+    
+//                                 const acceptBtn = btnRefs.current[0];
+//                                 if (acceptBtn) {
+//                                     gsap.fromTo(
+//                                         acceptBtn,
+//                                         { scale: 1, opacity: 1 },
+//                                         {
+//                                             scale: 1.1,
+//                                             opacity: 0.5,
+//                                             duration: 0.15,
+//                                             ease: "power2.out",
+//                                             yoyo: true,
+//                                             repeat: 1,
+//                                             onComplete: () => {
+//                                                 setActiveBtn("accept");
+//                                                 handlePrompt("accept");
+//                                             },
+//                                         }
+//                                     );
+//                                 } else {
+//                                     setActiveBtn("accept");
+//                                     handlePrompt("accept");
+//                                 }
+//                             }, 2500);
+//                         },
+//                     });
+//                 },
+//             });
+//         }
+//     }, []);
+    
+
+
+//     return (
+//         <div className="vh-100 bg-dark d-flex align-items-center">
+//             <div
+//                 className="w-100 px-5 d-flex flex-wrap justify-content-center"
+//                 style={{
+//                     gap: "0px",
+//                     rowGap: "20px", // vertical gap when stacked
+//                 }}
+//             >
+// {/* Small window */}
+// <div
+//   style={{
+//     transform: "perspective(1200px) rotateX(10deg) rotateY(35deg) scale(0.85)",
+//     transformStyle: "preserve-3d",
+//     transition: "transform 0.6s ease-out",
+//     flex: "1 1 300px",
+//     maxWidth: "700px",
+//   }}
+//   className="d-flex justify-content-center"
+// >
+//   <div style={{ position: "relative", width: "100%" }} className="mt-auto mb-5">
+//     <img
+//       src="./word.jpg"
+//       alt="word screenshot"
+//       className="rounded mt-auto shadow"
+//       style={{
+//         width: "100%",
+//         pointerEvents: "none",
+//         display: "block",
+//       }}
+//     />
+
+//     {/* ✅ Word視窗模擬AI卡片，貼齊右下角 */}
+//     <Card
+//       className="position-absolute text-white"
+//       style={{
+//         bottom: "0.4rem",
+//         right: "1rem",
+//         width: "250px",
+//         backgroundColor: "rgb(51,51,51)",
+//         display: "flex",
+//         flexDirection: "column",
+//         maxHeight: "100%",
+//         zIndex: 100,
+//         transform: "none", // 無偏移，直接對齊
+//         opacity: 1,
+//         pointerEvents: "auto",
+//       }}
+//     >
+//       <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
+//         <span className="small">Word's AI Helper</span>
+//         <span style={{ cursor: "pointer" }}>×</span>
+//       </Card.Header>
+
+//       <div
+//   style={{
+//     overflowY: "auto",
+//     flexGrow: 1,
+//     fontSize: "0.75rem", // ✅ 整體縮小字體
+//     pointerEvents: "none", // ✅ 禁用所有互動
+   
+//   }}
+// >
+//   <Card.Body>
+//     <Card.Title className="fs-6">Need help with your document?</Card.Title>
+
+//     <InputGroup className="mb-3">
+//       <Form.Control
+//         placeholder="Summarize this paragraph..."
+//         className="bg-dark text-white border-0 font-monospace"
+//         readOnly // ✅ 輸入欄也不可輸入（保險用）
+//       />
+//       <Button variant="secondary" disabled>💡</Button>
+//     </InputGroup>
+
+//     <p className="small mb-1">Suggested Prompts:</p>
+//     <div className="d-flex flex-wrap gap-2 mb-3">
+//       <Button size="sm" className="rounded-pill px-3" variant="secondary"   style={{
+//     fontSize: "0.75rem", // ✅ 整體縮小字體
+//   }}>
+//         Fix grammar
+//       </Button>
+//       <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+//     fontSize: "0.75rem", // ✅ 整體縮小字體
+//   }}>
+//         Make it longer
+//       </Button>
+//       <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+//     fontSize: "0.75rem", // ✅ 整體縮小字體
+//   }}>
+//         Make it shorter
+//       </Button>
+//       <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+//     fontSize: "0.75rem", // ✅ 整體縮小字體
+//   }}>
+//         Sum up
+//       </Button>
+//       <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+//     fontSize: "0.75rem", // ✅ 整體縮小字體
+//   }}>
+//         Translate / 翻譯
+//       </Button>
+//     </div>
+//   </Card.Body>
+// </div>
+//     </Card>
+//     <img
+  
+//   src="./top.png"
+//   alt="trigger base"
+//   style={{
+//     position: "absolute",
+//     bottom: "0.1rem",
+//     right: "0.1rem",
+//     width: "36px",
+//     opacity: 1,
+//     zIndex: 999, // < 卡片的 zIndex: 100
+//     pointerEvents: "none",
+//   }}
+// />
+    
+//   </div>
+// </div>
+
+
+//           {/* Large window - 統一 transform 區塊 */}
+//           <div
+//   style={{
+//     flex: "1 1 400px",
+//     maxWidth: "1000px",
+//     perspective: "1200px",
+//     transformStyle: "preserve-3d",
+//     transition: "transform 0.6s ease-out",
+//   }}
+//   className="d-flex justify-content-center me-2"
+// >
+//   <div
+//     style={{
+//       transform: "rotateX(10deg) rotateY(-15deg)",
+//       transformStyle: "preserve-3d",
+//       position: "relative",
+//       width: "100%",
+//     }}
+//   >
+//     <img
+//       ref={imgRef}
+//       src="./email.jpg"
+//       alt="email screenshot"
+//       className="rounded shadow"
+//       style={{
+//         width: "100%",
+//         display: "block",
+//         pointerEvents: "none",
+//       }}
+//     />
+
+
+//     {/* ✅ AI Chat Window Card */}
+//     <Card
+//       ref={cardRef}
+//       className="position-absolute text-white"
+//       style={{
+//         bottom: 0,
+//         right: 0,
+//         width: "320px",
+//         backgroundColor: "rgb(51,51,51)",
+//         margin: "1rem",
+//         display: "flex",
+//         flexDirection: "column",
+//         maxHeight: "90%",
+//         zIndex: 100, // ⬆ 在 top.png 之上
+//         transform: "translateX(100px)", // 👈 初始從右邊滑入
+//         opacity: 0, // 👈 初始透明，等待動畫出現
+//         pointerEvents: "auto",
+//       }}
+//     >
+//       <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
+//         <span className="small">Mouse’s AI Chat Window</span>
+//         <span style={{ cursor: "pointer" }}>×</span>
+//       </Card.Header>
+
+//       <div style={{ overflowY: "auto", flexGrow: 1 }}>
+//         <Card.Body>
+//           <Card.Title className="fs-6">How may I help you?</Card.Title>
+
+//           <InputGroup className="mb-3">
+//             <Form.Control
+//               placeholder="Ask me anything..."
+//               className="bg-dark text-white border-0 font-monospace"
+//             />
+//             <Button variant="secondary">⬆️</Button>
+//           </InputGroup>
+
+//           <p className="small mb-1">Suggested Prompts:</p>
+//           <div className="d-flex flex-wrap gap-2 mb-3">
+//           <Button
+//   ref={setBtnRef}
+//   variant={activeBtn === "accept" ? "dark" : "secondary"}
+//   size="sm"
+//   className={`rounded-pill px-3 ${activeBtn === "accept" ? "border border-white" : ""}`}
+//   onClick={() => {
+//     userInteractedRef.current = true;
+//     setActiveBtn("accept");
+//     handlePrompt("accept");
+//   }}
+// >
+//   Write Acceptance Email
+// </Button>
+
+// <Button
+//   ref={setBtnRef}
+//   variant={activeBtn === "decline" ? "dark" : "secondary"}
+//   size="sm"
+//   className={`rounded-pill px-3 ${activeBtn === "decline" ? "border border-white" : ""}`}
+//   onClick={() => {
+//     userInteractedRef.current = true;
+//     setActiveBtn("decline");
+//     handlePrompt("decline");
+//   }}
+// >
+//   Write Decline Email
+// </Button>
+
+// <Button
+//   ref={setBtnRef}
+//   variant={activeBtn === "translate" ? "dark" : "secondary"}
+//   size="sm"
+//   className={`rounded-pill px-3 ${activeBtn === "translate" ? "border border-white" : ""}`}
+//   onClick={() => {
+//     userInteractedRef.current = true;
+//     setActiveBtn("translate");
+//     handlePrompt("translate");
+//   }}
+// >
+//   Translate / 翻譯
+// </Button>
+
+//           </div>
+
+//           {text && <TypingText text={text} speed={speed} />}
+//         </Card.Body>
+//       </div>
+//     </Card>
+
+//     <img
+//   ref={triggerImgRef}
+//   src="./top.png"
+//   alt="trigger base"
+//   style={{
+//     position: "absolute",
+//     bottom: "0.1rem",
+//     right: "0.1rem",
+//     width: "48px",
+//     opacity: 0,
+//     zIndex: 999, // < 卡片的 zIndex: 100
+//     pointerEvents: "none",
+//   }}
+// />
+//   </div>
+// </div>
+
+
+//             </div>
+//         </div>
+
+//     );
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useRef, useState, useEffect } from "react";
+// import { Button, Form, Card, InputGroup } from "react-bootstrap";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// function TypingText({ text, speed = 50 }) {
+//     const [displayed, setDisplayed] = useState("");
+//     const [isFinished, setIsFinished] = useState(false);
+//     const bufferRef = useRef("");
+
+//     useEffect(() => {
+//         let i = 0;
+//         const chars = text.split("");
+//         let interval;
+
+//         bufferRef.current = "";
+//         setDisplayed("");
+//         setIsFinished(false);
+
+//         interval = setInterval(() => {
+//             if (i < chars.length) {
+//                 bufferRef.current += chars[i];
+//                 setDisplayed(bufferRef.current);
+//                 i++;
+//             } else {
+//                 clearInterval(interval);
+//                 setIsFinished(true);
+//             }
+//         }, speed);
+
+//         return () => clearInterval(interval);
+//     }, [text, speed]);
+
+//     return (
+//         <div>
+//             <p
+//                 className="text-white fs-6 lh-base font-monospace mb-1"
+//                 style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
+//             >
+//                 {displayed}
+//                 <span className="animate-pulse">|</span>
+//             </p>
+//             {isFinished && <p className="text-success font-monospace">✔️ Done</p>}
+//         </div>
+//     );
+// }
+
+// export function AiSimulation() {
+//     const [text, setText] = useState("");
+//     const [speed, setSpeed] = useState(10);
+//     const [activeBtn, setActiveBtn] = useState(null); // ➤ 新增狀態：目前哪顆按鈕被按
+//     const userInteractedRef = useRef(false);
+
+//     const imgRef = useRef(null);
+//     const cardRef = useRef(null);
+//     const btnRefs = useRef([]);
+//     btnRefs.current = [];
+
+//     const setBtnRef = (el) => {
+//         if (el && !btnRefs.current.includes(el)) {
+//             btnRefs.current.push(el);
+//         }
+//     };
+
+//     const handlePrompt = (type) => {
+//         if (type === "accept") {
+//             setText(`Dear HR,
+// Thank you very much for offering me the position at ABC Design. I’m happy to accept the offer and look forward to contributing to the team.
+
+// Best regards,  
+// Ilia Chang
+//   `);
+//         } else if (type === "decline") {
+//             setText(`Dear HR, 
+// Thank you very much for the opportunity and for offering me the position at ABC Design. After careful consideration, I’ve decided to pursue another opportunity that aligns better with my current goals.
+
+// I truly appreciate the time and effort your team invested throughout the process, and I wish you all continued success.
+          
+// Best regards,  
+// Ilia Chang`);
+//         } else if (type === "translate") {
+//             const raw = `張先生您好, 
+// 我們謹向您提案擔任 ABC Design 的資深設計師職位，任職日期為 2026 年 3 月 1 日。
+// 本職位的年薪為 11,000 美元，將以月薪形式支付。
+// 工作形式為混合制，每週一與週三需到公司出勤，其餘日子則可遠端工作。
+// 若您接受本提案，敬請回覆本郵件。我們將另行提供入職手續的詳細資訊。
+// 關於雇用條件與福利等詳情，請參閱附件中的聘用合約書。
+// 我們誠摯期待您加入 ABC Design。
+
+// John Doe
+// 人事部
+// ABC Design
+// `;
+//             setText(raw);
+//         }
+//     };
+
+//     useEffect(() => {
+//         if (imgRef.current && cardRef.current) {
+//             gsap.set(cardRef.current, { opacity: 0, y: 20 });
+//             btnRefs.current.forEach((btn) => gsap.set(btn, { opacity: 0, y: 10 }));
+
+//             ScrollTrigger.create({
+//                 trigger: imgRef.current,
+//                 start: "bottom bottom",
+//                 onEnter: () => {
+//                     gsap.to(cardRef.current, {
+//                         delay: 0.8,
+//                         opacity: 1,
+//                         y: 0,
+//                         duration: 0.5,
+//                         ease: "power2.out",
+//                         onComplete: () => {
+//                             const tl = gsap.timeline();
+//                             btnRefs.current.forEach((btn, index) => {
+//                                 tl.to(
+//                                     btn,
+//                                     {
+//                                         opacity: 1,
+//                                         y: 0,
+//                                         duration: 0.4,
+//                                         ease: "power2.out",
+//                                     },
+//                                     index === 0 ? "+=0.1" : "+=0.01"
+//                                 );
+//                             });
+
+//                             // ⏱ 自動觸發前確認使用者是否有互動
+//                             setTimeout(() => {
+//                                 if (userInteractedRef.current) return;
+
+//                                 const acceptBtn = btnRefs.current[0];
+//                                 if (acceptBtn) {
+//                                     gsap.fromTo(
+//                                         acceptBtn,
+//                                         { scale: 1, opacity: 1 },
+//                                         {
+//                                             scale: 1.1,
+//                                             opacity: 0.5,
+//                                             duration: 0.15,
+//                                             ease: "power2.out",
+//                                             yoyo: true,
+//                                             repeat: 1,
+//                                             onComplete: () => {
+//                                                 setActiveBtn("accept");
+//                                                 handlePrompt("accept");
+//                                             },
+//                                         }
+//                                     );
+//                                 } else {
+//                                     setActiveBtn("accept");
+//                                     handlePrompt("accept");
+//                                 }
+//                             }, 2500);
+//                         },
+//                     });
+//                 },
+//             });
+//         }
+//     }, []);
+
+//     return (
+//         <div className="vh-100 bg-dark d-flex align-items-center">
+//             <div className="w-100 d-flex justify-content-center">
+//                 <div style={{ position: "relative", width: "55%" }}>
+//                     <img
+//                         ref={imgRef}
+//                         src="./email.jpg"
+//                         alt="email screenshot"
+//                         className="rounded shadow"
+//                         style={{ width: "100%", display: "block" }}
+//                     />
+
+//                     <Card
+//                         ref={cardRef}
+//                         className="position-absolute text-white"
+//                         style={{
+//                             bottom: 0,
+//                             right: 0,
+//                             width: "320px",
+//                             backgroundColor: "rgb(51,51,51)",
+//                             margin: "1rem",
+//                             display: "flex",
+//                             flexDirection: "column",
+//                             maxHeight: "90%",
+//                         }}
+//                     >
+//                         <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
+//                             <span className="small">Mouse’s AI Chat Window</span>
+//                             <span style={{ cursor: "pointer" }}>×</span>
+//                         </Card.Header>
+
+//                         <div style={{ overflowY: "auto", flexGrow: 1 }}>
+//                             <Card.Body>
+//                                 <Card.Title className="fs-6">How may I help you?</Card.Title>
+
+//                                 <InputGroup className="mb-3">
+//                                     <Form.Control
+//                                         placeholder="Ask me anything..."
+//                                         className="bg-dark text-white border-0 font-monospace"
+//                                     />
+//                                     <Button variant="secondary">⬆️</Button>
+//                                 </InputGroup>
+
+//                                 <p className="small mb-1">Suggested Prompts:</p>
+//                                 <div className="d-flex flex-wrap gap-2 mb-3">
+//                                     <Button
+//                                         ref={setBtnRef}
+//                                         variant={activeBtn === "accept" ? "dark" : "secondary"}
+//                                         size="sm"
+//                                         className="rounded-pill px-3"
+//                                         onClick={() => {
+//                                             userInteractedRef.current = true;
+//                                             setActiveBtn("accept");
+//                                             handlePrompt("accept");
+//                                         }}
+//                                     >
+//                                         Write Acceptance Email
+//                                     </Button>
+
+//                                     <Button
+//                                         ref={setBtnRef}
+//                                         variant={activeBtn === "decline" ? "dark" : "secondary"}
+//                                         size="sm"
+//                                         className="rounded-pill px-3"
+//                                         onClick={() => {
+//                                             userInteractedRef.current = true;
+//                                             setActiveBtn("decline");
+//                                             handlePrompt("decline");
+//                                         }}
+//                                     >
+//                                         Write Decline Email
+//                                     </Button>
+
+//                                     <Button
+//                                         ref={setBtnRef}
+//                                         variant={activeBtn === "translate" ? "dark" : "secondary"}
+//                                         size="sm"
+//                                         className="rounded-pill px-3"
+//                                         onClick={() => {
+//                                             userInteractedRef.current = true;
+//                                             setActiveBtn("translate");
+//                                             handlePrompt("translate");
+//                                         }}
+//                                     >
+//                                         Translate / 翻譯
+//                                     </Button>
+//                                 </div>
+
+//                                 {text && <TypingText text={text} speed={speed} />}
+//                             </Card.Body>
+//                         </div>
+//                     </Card>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
