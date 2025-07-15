@@ -87,13 +87,13 @@ export function AiSimulation() {
     
     Please let me know the next steps in the onboarding process. I look forward to collaborating with everyone at ABC Design.
     
-    Best regards,  
-    Ilia Chang`
+Best regards,  
+Ilia Chang`
           : `Dear HR,
     Thank you very much for offering me the position at ABC Design. I’m happy to accept the offer and look forward to contributing to the team.
     
-    Best regards,  
-    Ilia Chang`;
+Best regards,  
+Ilia Chang`;
       } else if (type === "decline") {
         content = isLong
           ? `Dear HR, 
@@ -101,15 +101,15 @@ export function AiSimulation() {
     
     It was truly a pleasure speaking with your team, and I deeply appreciate the time and effort invested in the recruitment process. I wish ABC Design continued success and hope our paths may cross again in the future.
     
-    Best regards,  
-    Ilia Chang`
+Best regards,  
+Ilia Chang`
           : `Dear HR, 
     Thank you for the opportunity and for offering me the position at ABC Design. After careful consideration, I’ve decided to pursue another opportunity that better aligns with my current goals.
     
     I truly appreciate your team’s time and effort throughout the process and wish you continued success.
     
-    Best regards,  
-    Ilia Chang`;
+Best regards,  
+Ilia Chang`;
       } else if (type === "translate") {
         content = `張先生您好, 
         
@@ -197,7 +197,7 @@ ABC Design`;
                             {
                               opacity: 1,
                               y: 0,
-                              duration: 0.4,
+                              duration: 0.1,
                               ease: "power2.out",
                             },
                             index === 0 ? "+=0.1" : "+=0.01"
@@ -230,7 +230,7 @@ ABC Design`;
                             setActiveBtn("accept");
                             handlePrompt("accept");
                           }
-                        }, 3000);
+                        }, 1000);
                       }
                       ,
                     });
