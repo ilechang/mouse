@@ -8,50 +8,56 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 
-function TypingText({ text, speed = 50 }) {
-    const [displayed, setDisplayed] = useState("");
-    const [isFinished, setIsFinished] = useState(false);
-    const bufferRef = useRef("");
+function TypingText({ text, speed = 50, onFinished }) {
+  const [displayed, setDisplayed] = useState("");
+  const bufferRef = useRef("");
 
-    useEffect(() => {
-        let i = 0;
-        const chars = text.split("");
-        let interval;
+  useEffect(() => {
+    let i = 0;
+    const chars = text.split("");
+    let interval;
 
-        bufferRef.current = "";
-        setDisplayed("");
-        setIsFinished(false);
+    bufferRef.current = "";
+    setDisplayed("");
 
-        interval = setInterval(() => {
-            if (i < chars.length) {
-                bufferRef.current += chars[i];
-                setDisplayed(bufferRef.current);
-                i++;
-            } else {
-                clearInterval(interval);
-                setIsFinished(true);
-            }
-        }, speed);
+    interval = setInterval(() => {
+      if (i < chars.length) {
+        bufferRef.current += chars[i];
+        setDisplayed(bufferRef.current);
+        i++;
+      } else {
+        clearInterval(interval);
+        // ✅ 用 setTimeout 確保畫面先完成更新再呼叫 onFinished（避免 race condition）
+        setTimeout(() => {
+          onFinished?.();
+        }, 0);
+      }
+    }, speed);
 
-        return () => clearInterval(interval);
-    }, [text, speed]);
+    return () => clearInterval(interval);
+  // ✅ 注意：這裡不要依賴 onFinished（因為每次 render 它都變）
+  }, [text, speed]);
 
-    return (
-        <div>
-            <p
-                className="text-white  lh-base font-monospace mb-1"
-                style={{ whiteSpace: "pre-wrap", wordBreak: "break-word", fontSize: "0.8rem" }}
-            >
-                {displayed}
-            
-            </p>
-            {isFinished && <p className="text-success font-monospace">✔️ Done</p>}
-        </div>
-    );
+  return (
+    <p
+      className="text-white lh-base font-monospace mb-1"
+      style={{
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+        fontSize: "0.8rem",
+      }}
+    >
+      {displayed}
+    </p>
+  );
 }
+
+
 
 export function AiSimulation() {
     const [text, setText] = useState("");
+    const [history, setHistory] = useState([]); // 用來儲存前一個版本
+    const [isFinished, setIsFinished] = useState(false);
     const [speed, setSpeed] = useState(10);
     const [activeBtn, setActiveBtn] = useState(null); // ➤ 新增狀態：目前哪顆按鈕被按
     const userInteractedRef = useRef(false);
@@ -60,6 +66,7 @@ export function AiSimulation() {
     const btnContainerRef = useRef(null);
     const cardRef = useRef(null);
     const btnRefs = useRef([]);
+    const scrollRef = useRef(null);
     const triggerImgRef = useRef(null);
     btnRefs.current = [];
 
@@ -68,39 +75,66 @@ export function AiSimulation() {
             btnRefs.current.push(el);
         }
     };
+    const handlePrompt = (type, isLong = false) => {
+      setIsFinished(false); // ✅ 重設打字完成狀態
+    
+      let content = "";
+    
+      if (type === "accept") {
+        content = isLong
+          ? `Dear HR,
+    Thank you very much for offering me the position at ABC Design. I am thrilled to accept the role and am genuinely excited about the opportunity to work with such a talented team. I believe my background in design and my passion for innovation will make a meaningful contribution to your company’s goals.
+    
+    Please let me know the next steps in the onboarding process. I look forward to collaborating with everyone at ABC Design.
+    
+    Best regards,  
+    Ilia Chang`
+          : `Dear HR,
+    Thank you very much for offering me the position at ABC Design. I’m happy to accept the offer and look forward to contributing to the team.
+    
+    Best regards,  
+    Ilia Chang`;
+      } else if (type === "decline") {
+        content = isLong
+          ? `Dear HR, 
+    Thank you sincerely for the opportunity and for offering me the position at ABC Design. After much thought and careful consideration, I’ve decided to pursue another opportunity that aligns more closely with my long-term career aspirations and personal values.
+    
+    It was truly a pleasure speaking with your team, and I deeply appreciate the time and effort invested in the recruitment process. I wish ABC Design continued success and hope our paths may cross again in the future.
+    
+    Best regards,  
+    Ilia Chang`
+          : `Dear HR, 
+    Thank you for the opportunity and for offering me the position at ABC Design. After careful consideration, I’ve decided to pursue another opportunity that better aligns with my current goals.
+    
+    I truly appreciate your team’s time and effort throughout the process and wish you continued success.
+    
+    Best regards,  
+    Ilia Chang`;
+      } else if (type === "translate") {
+        content = `張先生您好, 
+        
+    我們謹向您提案擔任 ABC Design 的資深設計師職位，任職日期為 2026 年 3 月 1 日。
 
-    const handlePrompt = (type) => {
-        if (type === "accept") {
-            setText(`Dear HR,
-Thank you very much for offering me the position at ABC Design. I’m happy to accept the offer and look forward to contributing to the team.
+    本職位的年薪為 11,000 美元，將以月薪形式支付。工作形式為混合制，每週一與週三需到公司出勤，其餘日子則可遠端工作。
 
-Best regards,  
-Ilia Chang
-  `);
-        } else if (type === "decline") {
-            setText(`Dear HR, 
-Thank you very much for the opportunity and for offering me the position at ABC Design. After careful consideration, I’ve decided to pursue another opportunity that aligns better with my current goals.
+    若您接受本提案，敬請回覆本郵件。我們將另行提供入職手續的詳細資訊。關於雇用條件與福利等詳情，請參閱附件中的聘用合約書。
 
-I truly appreciate the time and effort your team invested throughout the process, and I wish you all continued success.
-          
-Best regards,  
-Ilia Chang`);
-        } else if (type === "translate") {
-            const raw = `張先生您好, 
-我們謹向您提案擔任 ABC Design 的資深設計師職位，任職日期為 2026 年 3 月 1 日。
-本職位的年薪為 11,000 美元，將以月薪形式支付。
-工作形式為混合制，每週一與週三需到公司出勤，其餘日子則可遠端工作。
-若您接受本提案，敬請回覆本郵件。我們將另行提供入職手續的詳細資訊。
-關於雇用條件與福利等詳情，請參閱附件中的聘用合約書。
 我們誠摯期待您加入 ABC Design。
-
-John Doe
-人事部
-ABC Design
-`;
-            setText(raw);
-        }
+    
+John Doe  
+人事部  
+ABC Design`;
+      }
+    
+      if (!isLong && type !== "translate") {
+        setHistory([content]); // ✅ 只儲存短版本
+      }
+    
+      setText(content); // ✅ 打字效果觸發
     };
+    
+    
+  
 
     useEffect(() => {
         if (imgRef.current && cardRef.current) {
@@ -113,8 +147,6 @@ ABC Design
                 transformOrigin: "bottom right",
             });
 
-
- 
 
 
     
@@ -390,7 +422,14 @@ ABC Design
         <span style={{ cursor: "pointer" }}>×</span>
       </Card.Header>
 
-      <div style={{ overflowY: "auto", flexGrow: 1 }}>
+      <div
+  ref={scrollRef}
+  style={{
+    overflowY: "auto",
+    flexGrow: 1,
+    maxHeight: "100%",
+  }}
+>
       <Card.Body>
   <Card.Title className="fs-6">How may I help you?</Card.Title>
 
@@ -463,8 +502,65 @@ ABC Design
 </div>
 
 
-  {/* ✅ AI回應打字效果 */}
-  {text && <TypingText text={text} speed={speed} />}
+{/* ✅ AI回應打字效果 */}
+{text && (
+  <>
+<TypingText
+  text={text}
+  speed={speed}
+  onFinished={() => {
+    setIsFinished(true);
+
+    // ✅ 自動滾到底部，讓使用者看到按鈕
+    setTimeout(() => {
+      scrollRef.current?.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }, 0);
+  }}
+/>
+    {isFinished && activeBtn !== "translate" && (
+      <div className="d-flex gap-2 mt-2">
+        {history.length === 1 && text === history[0] && (
+
+
+
+<Button
+variant="secondary"
+size="sm"
+className="rounded-pill px-3 mt-3"
+onClick={() => handlePrompt(activeBtn, true)}
+>
+Make it longer
+  </Button>
+)}
+
+{history.length === 1 && text !== history[0] && (
+<Button
+variant="secondary"
+size="sm"
+className="rounded-pill px-3 mt-3"
+onClick={() => {
+  setIsFinished(false); // ✅ reset typing state
+  setText(history[0]);
+}}
+>
+← Previous Version
+  </Button>
+
+
+
+
+
+
+         
+        )}
+      </div>
+    )}
+  </>
+)}
+
 </Card.Body>
       </div>
     </Card>
