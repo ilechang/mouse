@@ -2,6 +2,7 @@ import Nav from "./components/Nav";
 import Jumbotron from "./components/Jumbotron";
 import SoundSection from "./components/SoundSection";
 import DisplaySection from "./components/DisplaySection";
+import MacroProfile from "./components/macroProfile";
 import R3FViewer from "./components/R3FViewer";
 import { AiSimulation } from "./components/AiSimulation";
 import { useRef } from "react";
@@ -34,19 +35,14 @@ function App() {
 
       <R3FViewer ref={webgiViewerRef} /> 
     </div>
-    <AiSimulation />    
+    <AiSimulation /> 
+
+        <MacroProfile />   
         </>
   );
 }
 
 export default App;
-
-
-
-
-
-
-
 
 
 
