@@ -2,7 +2,7 @@ import Nav from "./components/Nav";
 import Jumbotron from "./components/Jumbotron";
 import SoundSection from "./components/SoundSection";
 import DisplaySection from "./components/DisplaySection";
-import MacroProfile from "./components/macroProfile";
+import MacroProfile from "./components/MacroProfile";
 import R3FViewer from "./components/R3FViewer";
 import { AiSimulation } from "./components/AiSimulation";
 import { useRef } from "react";
