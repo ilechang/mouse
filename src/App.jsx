@@ -32,8 +32,8 @@ function App() {
 
         <DisplaySection triggerPreview={handlePreview} />
       </div>
-
-      <R3FViewer ref={webgiViewerRef} /> 
+{/* 
+      <R3FViewer ref={webgiViewerRef} />  */}
     </div>
     <AiSimulation /> 
 
