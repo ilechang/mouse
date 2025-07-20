@@ -443,4 +443,9 @@ nav .link-styled {
   .sound-section .content {
     max-width: 100%;
   }
+  
+  .placeholder-white::placeholder {
+    color: white;
+    opacity: 0.6; /* 可選，讓它有點透明感 */
+  }
 }

@@ -190,7 +190,7 @@ function MacroProfile() {
         onMouseEnter={() => {
           clearTimeout(timeoutRef.current);
           setShow(true);
-          timeoutRef.current = setTimeout(() => setShow(false), 1500);
+          timeoutRef.current = setTimeout(() => setShow(false), 1800);
         }}
         onMouseLeave={() => {
           clearTimeout(timeoutRef.current);
