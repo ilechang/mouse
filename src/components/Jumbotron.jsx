@@ -1,6 +1,6 @@
 import React from "react";
 import Iphone from "../assets/images/iphone-14.jpg";
-import HoldingIphone from "../assets/images/iphone-hand.png";
+// import HoldingIphone from "../assets/images/iphone-hand.png";
 
 function Jumbotron() {
 
@@ -14,12 +14,17 @@ function Jumbotron() {
   }
 
   return (
-    <div className="jumbotron-section wrapper">
-      <h2 className="title">New</h2>
-      <img className="logo" src={Iphone} alt="iPhone 14 Pro" />
-      <p className="text">Big and bigger.</p>
+    <div className="jumbotron-section wrapper" 
+    style={{
+    
+      height: "110vh",
+    }}
+    >
+      <h2 className="title">header 1</h2>
+      {/* <img className="logo" src={Iphone} alt="iPhone 14 Pro" /> */}
+      <h1 className="text">Product name</h1>
       <span className="description">
-        From $41.62/mo. for 24 mo. or $999 before trade-in
+      Lorem ipsum sint occaecat cupidatat non proident, sunt in culpa qui officia.
       </span>
       <ul className="links">
         <li>
@@ -29,7 +34,7 @@ function Jumbotron() {
             <a className="link" onClick={handleLearnMore}>Learn more</a>
         </li>
       </ul>
-      <img className="iphone-img" src={HoldingIphone} alt="iPhone" />
+      <img className="iphone-img" src="./top.png" alt="iPhone"  style={{ transform: 'rotate(180deg)' }} />
     </div>
   );
 }

@@ -246,8 +246,31 @@ ABC Design`;
 
 
   return (
-    
-    <div className="vh-100 bg-dark d-flex align-items-center">
+    <>
+    <div className="sound-section wrapper">
+    <div className="body">
+    <div className="sound-section-content content">
+        <h2 className="title">hearder 4</h2>
+        <p className="text">One click to AI</p>
+        <span className="description">
+          Lorem ipsum proident dolor sit amet, adipiscing elit.
+        </span>
+        <ul className="links">
+          <li>
+            <button className="button">Buy</button>
+          </li>
+          <li>
+            <a className="link"  >Learn more</a>
+          </li>
+        </ul>
+      </div>
+      </div>
+      </div>
+
+    <div className="vh-100 bg-white d-flex align-items-center sound-section wrapper">
+
+     
+
       <div
         className="w-100 px-5 d-flex flex-wrap justify-content-center"
         style={{
@@ -436,7 +459,7 @@ ABC Design`;
                   maxHeight: "100%",
                 }}
               >
-                
+
                 <Card.Body>
                   <Card.Title className="fs-5 text-center">How may I help you?</Card.Title>
                   <InputGroup className="mb-3  ">
@@ -444,7 +467,7 @@ ABC Design`;
                       placeholder="Ask me anything..."
                       className="bg-dark text-white border placeholder-white border-secondary font-monospace "
                       readOnly
-                      
+
                     />
                     <Button variant="secondary" >↑</Button>
                   </InputGroup>
@@ -554,12 +577,6 @@ ABC Design`;
                               ← Previous Version
                             </Button>
 
-
-
-
-
-
-
                           )}
                         </div>
                       )}
@@ -590,6 +607,7 @@ ABC Design`;
 
       </div>
     </div>
+    </>
 
   );
 

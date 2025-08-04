@@ -12,7 +12,7 @@ import { ScrollAnimation } from './ScrollAnimation';
 
 
 
-//child
+
 const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
   const gltf = useGLTF('/112233.glb');
   const cameraRef = useRef();
@@ -22,8 +22,7 @@ const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
   useImperativeHandle(ref, () => ({
     triggerPreview() {
       setPreviewMode(true);
-      cameraRef.current.position.set(13.04, -2, 2.29);
-      controlsRef.current.target.set(0.11, 0.0, 0.0);
+  
       controlsRef.current.enabled = false;
       controlsRef.current.update();
     },
@@ -33,6 +32,7 @@ const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
     },
   }
   ));
+  const modelRef = useRef();
 
   return (
     <>
@@ -43,24 +43,23 @@ const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
         fov={45}
       />
       <OrbitControls ref={controlsRef} enabled={false} enableZoom={false} />
-      <primitive object={gltf.scene} />
+      <group ref={modelRef}>
+  <primitive object={gltf.scene} />
+</group>
       <ambientLight intensity={0.4} />
       <directionalLight position={[10, 10, 10]} intensity={1.5} />
       <ScrollAnimation
-        cameraRef={cameraRef}
-        controlsRef={controlsRef}
-        isMobile={isMobile}
-      />
+    cameraRef={cameraRef}
+    controlsRef={controlsRef}
+    isMobile={isMobile}
+    modelRef={modelRef} // ✅ 把 modelRef 傳給 ScrollAnimation 使用
+  />
     </>
   );
 });
 
 
 
-
-
-
-//parent
 
 const R3FViewer = forwardRef((props, ref) => {
   const viewerRef = useRef();
@@ -86,8 +85,8 @@ const R3FViewer = forwardRef((props, ref) => {
         pointerEvents: previewMode ? 'all' : 'none',
         position: 'fixed',
         top: 0,
-        left: 0,
-        width: '100vw',
+        left: "-32%",
+        width: '160vw',
         height: '100vh',
         zIndex: 0,
       }}

@@ -1,16 +1,17 @@
-import Nav from "./components/Nav";
 import Jumbotron from "./components/Jumbotron";
-import SoundSection from "./components/SoundSection";
-import DisplaySection from "./components/DisplaySection";
-import MacroProfile from "./components/MacroProfile";
+import WorkSection from "./components/WorkSection";
+import GameSection from "./components/GameSection";
+import MultiScreen from "./components/MultiScreen";
 import R3FViewer from "./components/R3FViewer";
 import { AiSimulation } from "./components/AiSimulation";
 import { useRef } from "react";
+import MouseMacroPage from "./components/MouseMacroPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   const webgiViewerRef = useRef();
- 
+
 
   const handlePreview = () => {
     webgiViewerRef.current.triggerPreview();
@@ -18,31 +19,66 @@ function App() {
 
   return (<>
     <div className="App">
-      <div  id="content">
-        <Nav />
+      <div id="content">
         <Jumbotron />
-        <SoundSection />
-
-        {/* 🔴 新增測試區塊 */}
-        {/* <div className="test" style={{ backgroundColor: 'red', height: '100vh' }}>
-          <h2 style={{ color: 'white', textAlign: 'center', paddingTop: '40vh' }}>
-            這是紅色測試區塊
-          </h2>
-        </div> */}
-
-        <DisplaySection triggerPreview={handlePreview} />
+        <WorkSection />
+        {/* <div className="buffer-section" style={{ height: '30vh' }} /> */}
+        <GameSection triggerPreview={handlePreview} />
       </div>
-{/* 
-      <R3FViewer ref={webgiViewerRef} />  */}
-    </div>
-    <AiSimulation /> 
+          <R3FViewer ref={webgiViewerRef} />  
+      </div>
+    <AiSimulation />
+  
+    <MouseMacroPage />
+    <MultiScreen />
 
-        <MacroProfile />   
-        </>
+  </>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import Nav from "./components/Nav";
+// import Jumbotron from "./components/Jumbotron";
+// import SoundSection from "./components/SoundSection";
+// import DisplaySection from "./components/DisplaySection";
+// import MouseMacroPage from "./components/MouseMacroPage";
+// import MultiScreen from "./components/MultiScreen";
+// import R3FViewer from "./components/R3FViewer";
+// import { AiSimulation } from "./components/AiSimulation";
+// import { useRef } from "react";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+// function App() {
+//   const webgiViewerRef = useRef();
+
+
+//   const handlePreview = () => {
+//     webgiViewerRef.current.triggerPreview();
+//   };
+
+//   return (<>
+
+
+//     <MouseMacroPage />
+//     {/* <MultiScreen /> */}
+//   </>
+//   );
+// }
+
+// export default App;
 
 
 
