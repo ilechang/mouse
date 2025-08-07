@@ -268,10 +268,10 @@ nav .link-styled {
 }
 
 .jumbotron-section .iphone-img {
-  margin-right: -400px;
-  height: 516px;
+  margin-right: -350px;
+  height:75%;
   position: absolute;
-  bottom: 0;
+  bottom: 0%;
 }
 
 .mobile-or-tablet .iphone-img {

@@ -10,6 +10,8 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF, PerspectiveCamera } from '@react-three/drei';
 import { ScrollAnimation } from './ScrollAnimation';
 
+import { Environment } from '@react-three/drei';
+import { RGBELoader } from 'three-stdlib'; // 別忘了這行！
 
 
 
@@ -46,8 +48,9 @@ const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
       <group ref={modelRef}>
   <primitive object={gltf.scene} />
 </group>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[10, 10, 10]} intensity={1.5} />
+      
+      <Environment files="./quad.hdr" background={false} />
+      <directionalLight position={[-10, 5, 5]} intensity={0.5} />
       <ScrollAnimation
     cameraRef={cameraRef}
     controlsRef={controlsRef}
@@ -85,7 +88,7 @@ const R3FViewer = forwardRef((props, ref) => {
         pointerEvents: previewMode ? 'all' : 'none',
         position: 'fixed',
         top: 0,
-        left: "-32%",
+        left: "-42%",
         width: '160vw',
         height: '100vh',
         zIndex: 0,

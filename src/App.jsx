@@ -2,6 +2,7 @@ import Jumbotron from "./components/Jumbotron";
 import WorkSection from "./components/WorkSection";
 import GameSection from "./components/GameSection";
 import MultiScreen from "./components/MultiScreen";
+import Research from "./components/Research.jsx";
 import R3FViewer from "./components/R3FViewer";
 import { AiSimulation } from "./components/AiSimulation";
 import { useRef } from "react";
@@ -27,6 +28,7 @@ function App() {
       </div>
           <R3FViewer ref={webgiViewerRef} />  
       </div>
+      <Research/>
     <AiSimulation />
   
     <MouseMacroPage />

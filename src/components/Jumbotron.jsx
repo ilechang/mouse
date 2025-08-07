@@ -16,8 +16,7 @@ function Jumbotron() {
   return (
     <div className="jumbotron-section wrapper" 
     style={{
-    
-      height: "110vh",
+          height: "100vh",
     }}
     >
       <h2 className="title">header 1</h2>
@@ -34,7 +33,7 @@ function Jumbotron() {
             <a className="link" onClick={handleLearnMore}>Learn more</a>
         </li>
       </ul>
-      <img className="iphone-img" src="./top.png" alt="iPhone"  style={{ transform: 'rotate(180deg)' }} />
+      <img className="iphone-img" src="./top.png" alt="iPhone"   />
     </div>
   );
 }

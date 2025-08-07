@@ -19,17 +19,20 @@ function WorkSection() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        height: "100vh",
+        height: "120vh",
       }}
     >
       <div className="container text-dark text-center">
         <div className="row">
-        <div className="col-md-4 me-auto position-relative" style={{ top: "200px" }}>
-            <h2 className="title">header 2</h2>
-            <p className="h3 fw-bold">product slogan 3</p>
+        <div className="col-md-4 me-auto position-relative" style={{ top: "0px",
+    left: "35%"
+      
+      }}>
+            {/* <h2 className="title">header 2</h2>
+            <p className="h3 fw-bold">Smart for Work</p>
             <p className="description">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            </p>
+            Quick AI assistant launch and smart profile switching streamline creative workflows.
+            </p> */}
             {/* <button className="btn btn-light mt-3" onClick={handleScrollToTop}>
               TOP
             </button> */}
