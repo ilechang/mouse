@@ -7,6 +7,7 @@ import R3FViewer from "./components/R3FViewer";
 import { AiSimulation } from "./components/AiSimulation";
 import { useRef } from "react";
 import MouseMacroPage from "./components/MouseMacroPage";
+import PhysicalFeatures from "./components/PhysicalFeatures";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -29,9 +30,11 @@ function App() {
           <R3FViewer ref={webgiViewerRef} />  
       </div>
       <Research/>
+      <PhysicalFeatures/>
     <AiSimulation />
   
     <MouseMacroPage />
+
     <MultiScreen />
 
   </>

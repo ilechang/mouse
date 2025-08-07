@@ -35,7 +35,7 @@ function Jumbotron() {
       </ul>
       <img className="iphone-img" src="./top.png" alt="iPhone"   />
     </div>
-  );
+  );warumnicht
 }
 
 export default Jumbotron;
