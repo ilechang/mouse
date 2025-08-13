@@ -247,366 +247,380 @@ ABC Design`;
 
   return (
     <>
-    <div className="sound-section wrapper">
-    <div className="body">
-    <div className="sound-section-content content">
-        <h2 className="title">hearder 4</h2>
-        <p className="text">One click to AI</p>
-        <span className="description">
-          Lorem ipsum proident dolor sit amet, adipiscing elit.
-        </span>
-        <ul className="links">
-          <li>
-            <button className="button">Buy</button>
-          </li>
-          <li>
-            <a className="link"  >Learn more</a>
-          </li>
-        </ul>
-      </div>
-      </div>
-      </div>
-
-    <div className="vh-100 bg-white d-flex align-items-center sound-section wrapper">
-
-     
-
-      <div
-        className="w-100 px-5 d-flex flex-wrap justify-content-center"
-        style={{
-          gap: "0px",
-          rowGap: "20px", // vertical gap when stacked
-        }}
-      >
-        {/* Small window */}
-        <div
-          style={{
-            transform: "perspective(1200px) rotateX(10deg) rotateY(35deg) scale(0.85)",
-            transformStyle: "preserve-3d",
-            transition: "transform 0.6s ease-out",
-            flex: "1 1 300px",
-            maxWidth: "700px",
-          }}
-          className="d-flex justify-content-center"
-        >
-          <div style={{ position: "relative", width: "100%" }} className="mt-auto mb-5">
-            <img
-              src="./word.jpg"
-              alt="word screenshot"
-              className="rounded mt-auto shadow"
-              style={{
-                width: "100%",
-                pointerEvents: "none",
-                display: "block",
-              }}
-            />
-
-            {/* ✅ Word視窗模擬AI卡片，貼齊右下角 */}
-            <Card
-              className="position-absolute text-white"
-              style={{
-                bottom: "0.4rem",
-                right: "1rem",
-                width: "250px",
-                backgroundColor: "rgb(51,51,51)",
-                display: "flex",
-                flexDirection: "column",
-                maxHeight: "100%",
-                zIndex: 100,
-                transform: "none", // 無偏移，直接對齊
-                opacity: 1,
-                pointerEvents: "auto",
-              }}
-            >
-              <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
-                <span className="small">Word's AI Helper</span>
-                <span style={{ cursor: "pointer" }}>×</span>
-              </Card.Header>
-
-              <div
-                style={{
-                  overflowY: "auto",
-                  flexGrow: 1,
-                  fontSize: "0.75rem", // ✅ 整體縮小字體
-                  pointerEvents: "none", // ✅ 禁用所有互動
-
-                }}
-              >
-                <Card.Body>
-                  <Card.Title className="fs-6 text-center">How may I help you?</Card.Title>
-
-
-                  <InputGroup className="mb-3">
-                    <Form.Control
-                      placeholder="Summarize this paragraph..."
-                      className="bg-dark text-white border-0 font-monospace"
-                      readOnly // ✅ 輸入欄也不可輸入（保險用）
-                    />
-                    <Button variant="secondary" disabled>💡</Button>
-                  </InputGroup>
-
-                  <p className="small mb-1">Suggested Prompts:</p>
-                  <div className="d-flex flex-wrap gap-2 mb-3">
-                    <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
-                      fontSize: "0.75rem", // ✅ 整體縮小字體
-                    }}>
-                      Fix grammar
-                    </Button>
-                    <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
-                      fontSize: "0.75rem", // ✅ 整體縮小字體
-                    }}>
-                      Make it longer
-                    </Button>
-                    <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
-                      fontSize: "0.75rem", // ✅ 整體縮小字體
-                    }}>
-                      Make it shorter
-                    </Button>
-                    <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
-                      fontSize: "0.75rem", // ✅ 整體縮小字體
-                    }}>
-                      Sum up
-                    </Button>
-                    <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
-                      fontSize: "0.75rem", // ✅ 整體縮小字體
-                    }}>
-                      Translate / 翻譯
-                    </Button>
-                  </div>
-                </Card.Body>
-              </div>
-            </Card>
-            <img
-
-              src="./top.png"
-              alt="trigger base"
-              style={{
-                position: "absolute",
-                bottom: "0.1rem",
-                right: "0.1rem",
-                width: "36px",
-                opacity: 1,
-                zIndex: 999, // < 卡片的 zIndex: 100
-                pointerEvents: "none",
-              }}
-            />
-
+      {/* <div className="sound-section wrapper">
+        <div className="body">
+          <div className="sound-section-content content">
+            <h2 className="title">hearder 4</h2>
+            <p className="text">One click to AI</p>
+            <span className="description">
+              Lorem ipsum proident dolor sit amet, adipiscing elit.
+            </span>
+            <ul className="links">
+              <li>
+                <button className="button">Buy</button>
+              </li>
+              <li>
+                <a className="link"  >Learn more</a>
+              </li>
+            </ul>
           </div>
+        </div>
+      </div> */}
+
+      <div className="vh-100 bg-white d-flex align-items-center sound-section wrapper">
+        <div className="sound-section-content content">
+          <h2 className="title">hearder 4</h2>
+          <p className="text">One click to AI</p>
+          <span className="description">
+            Lorem ipsum proident dolor sit amet, adipiscing elit.
+          </span>
+          <ul className="links">
+            <li>
+              <button className="button">Buy</button>
+            </li>
+            <li>
+              <a className="link"  >Learn more</a>
+            </li>
+          </ul>
         </div>
 
 
-        {/* Large window - 統一 transform 區塊 */}
         <div
+          className="w-100 px-5 d-flex flex-wrap justify-content-center"
           style={{
-            flex: "1 1 400px",
-            maxWidth: "1000px",
-            perspective: "1200px",
-            transformStyle: "preserve-3d",
-            transition: "transform 0.6s ease-out",
+            gap: "0px",
+            rowGap: "20px", // vertical gap when stacked
           }}
-          className="d-flex justify-content-center me-2"
         >
+          {/* Small window */}
           <div
             style={{
-              transform: "rotateX(10deg) rotateY(-15deg)",
+              transform: "perspective(1200px) rotateX(10deg) rotateY(35deg) scale(0.85)",
               transformStyle: "preserve-3d",
-              position: "relative",
-              width: "100%",
+              transition: "transform 0.6s ease-out",
+              flex: "1 1 300px",
+              maxWidth: "700px",
             }}
+            className="d-flex justify-content-center"
           >
-            <img
-              ref={imgRef}
-              src="./email.jpg"
-              alt="email screenshot"
-              className="rounded shadow"
-              style={{
-                width: "100%",
-                display: "block",
-                pointerEvents: "none",
-              }}
-            />
-
-
-            {/* ✅ AI Chat Window Card */}
-            <Card
-              ref={cardRef}
-              className="position-absolute text-white"
-              style={{
-                bottom: 0,
-                right: 0,
-                width: "320px",
-                backgroundColor: "rgb(51,51,51)",
-                margin: "1rem",
-                display: "flex",
-                flexDirection: "column",
-                maxHeight: "90%",
-                zIndex: 100, // ⬆ 在 top.png 之上
-                transform: "translateX(100px)", // 👈 初始從右邊滑入
-                opacity: 0, // 👈 初始透明，等待動畫出現
-                pointerEvents: "auto",
-              }}
-            >
-              <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
-                <span className="small">Mouse’s AI Chat Window</span>
-                <span style={{ cursor: "pointer" }}>×</span>
-              </Card.Header>
-
-              <div
-                ref={scrollRef}
+            <div style={{ position: "relative", width: "100%" }} className="mt-auto mb-5">
+              <img
+                src="./word.jpg"
+                alt="word screenshot"
+                className="rounded mt-auto shadow"
                 style={{
-                  overflowY: "auto",
-                  flexGrow: 1,
+                  width: "100%",
+                  pointerEvents: "none",
+                  display: "block",
+                }}
+              />
+
+              {/* ✅ Word視窗模擬AI卡片，貼齊右下角 */}
+              <Card
+                className="position-absolute text-white"
+                style={{
+                  bottom: "0.4rem",
+                  right: "1rem",
+                  width: "250px",
+                  backgroundColor: "rgb(51,51,51)",
+                  display: "flex",
+                  flexDirection: "column",
                   maxHeight: "100%",
+                  zIndex: 100,
+                  transform: "none", // 無偏移，直接對齊
+                  opacity: 1,
+                  pointerEvents: "auto",
                 }}
               >
+                <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
+                  <span className="small">Word's AI Helper</span>
+                  <span style={{ cursor: "pointer" }}>×</span>
+                </Card.Header>
 
-                <Card.Body>
-                  <Card.Title className="fs-5 text-center">How may I help you?</Card.Title>
-                  <InputGroup className="mb-3  ">
-                    <Form.Control
-                      placeholder="Ask me anything..."
-                      className="bg-dark text-white border placeholder-white border-secondary font-monospace "
-                      readOnly
+                <div
+                  style={{
+                    overflowY: "auto",
+                    flexGrow: 1,
+                    fontSize: "0.75rem", // ✅ 整體縮小字體
+                    pointerEvents: "none", // ✅ 禁用所有互動
 
-                    />
-                    <Button variant="secondary" >↑</Button>
-                  </InputGroup>
+                  }}
+                >
+                  <Card.Body>
+                    <Card.Title className="fs-6 text-center">How may I help you?</Card.Title>
 
 
-                  <p className="small mb-1">Suggested Prompts:</p>
-                  <div
-                    className="d-flex flex-wrap gap-2 mb-3 "
-                    ref={el => (btnContainerRef.current = el)} // <== 你要加這個
-                    style={{
-                      visibility: "hidden", // ✅ 不佔空間
-                      height: 0,             // ✅ 不撐開高度
-                      overflow: "hidden",
-                    }}
-                  >
-                    <Button
-                      ref={setBtnRef}
-                      variant={activeBtn === "accept" ? "dark" : "secondary"}
-                      size="sm"
-                      className={`rounded-pill px-3 ${activeBtn === "accept" ? "border border-white" : ""
-                        }`}
-                      onClick={() => {
-                        userInteractedRef.current = true;
-                        setActiveBtn("accept");
-                        handlePrompt("accept");
-                      }}
-                    >
-                      Write Acceptance Email
-                    </Button>
-
-                    <Button
-                      ref={setBtnRef}
-                      variant={activeBtn === "decline" ? "dark" : "secondary"}
-                      size="sm"
-                      className={`rounded-pill px-3 ${activeBtn === "decline" ? "border border-white" : ""
-                        }`}
-                      onClick={() => {
-                        userInteractedRef.current = true;
-                        setActiveBtn("decline");
-                        handlePrompt("decline");
-                      }}
-                    >
-                      Write Decline Email
-                    </Button>
-
-                    <Button
-                      ref={setBtnRef}
-                      variant={activeBtn === "translate" ? "dark" : "secondary"}
-                      size="sm"
-                      className={`rounded-pill px-3 ${activeBtn === "translate" ? "border border-white" : ""
-                        }`}
-                      onClick={() => {
-                        userInteractedRef.current = true;
-                        setActiveBtn("translate");
-                        handlePrompt("translate");
-                      }}
-                    >
-                      Translate / 翻譯
-                    </Button>
-                  </div>
-
-                  {showHr && <hr />}
-                  {/* ✅ AI回應打字效果 */}
-                  {text && (
-                    <>
-                      <TypingText
-                        text={text}
-                        speed={speed}
-                        onFinished={() => {
-                          setIsFinished(true);
-
-                          // ✅ 自動滾到底部，讓使用者看到按鈕
-                          setTimeout(() => {
-                            scrollRef.current?.scrollTo({
-                              top: scrollRef.current.scrollHeight,
-                              behavior: "smooth",
-                            });
-                          }, 0);
-                        }}
+                    <InputGroup className="mb-3">
+                      <Form.Control
+                        placeholder="Summarize this paragraph..."
+                        className="bg-dark text-white border-0 font-monospace"
+                        readOnly // ✅ 輸入欄也不可輸入（保險用）
                       />
-                      {isFinished && activeBtn !== "translate" && (
-                        <div className="d-flex gap-2 mt-2">
-                          {history.length === 1 && text === history[0] && (
+                      <Button variant="secondary" disabled>💡</Button>
+                    </InputGroup>
 
+                    <p className="small mb-1">Suggested Prompts:</p>
+                    <div className="d-flex flex-wrap gap-2 mb-3">
+                      <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+                        fontSize: "0.75rem", // ✅ 整體縮小字體
+                      }}>
+                        Fix grammar
+                      </Button>
+                      <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+                        fontSize: "0.75rem", // ✅ 整體縮小字體
+                      }}>
+                        Make it longer
+                      </Button>
+                      <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+                        fontSize: "0.75rem", // ✅ 整體縮小字體
+                      }}>
+                        Make it shorter
+                      </Button>
+                      <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+                        fontSize: "0.75rem", // ✅ 整體縮小字體
+                      }}>
+                        Sum up
+                      </Button>
+                      <Button size="sm" className="rounded-pill px-3" variant="secondary" style={{
+                        fontSize: "0.75rem", // ✅ 整體縮小字體
+                      }}>
+                        Translate / 翻譯
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </div>
+              </Card>
+              <img
 
+                src="./top.png"
+                alt="trigger base"
+                style={{
+                  position: "absolute",
+                  bottom: "0.1rem",
+                  right: "0.1rem",
+                  width: "36px",
+                  opacity: 1,
+                  zIndex: 999, // < 卡片的 zIndex: 100
+                  pointerEvents: "none",
+                }}
+              />
 
-                            <Button
-                              variant="secondary"
-                              size="sm"
-                              className="rounded-pill px-3 mt-3"
-                              onClick={() => handlePrompt(activeBtn, true)}
-                            >
-                              Make it longer
-                            </Button>
-                          )}
-
-                          {history.length === 1 && text !== history[0] && (
-                            <Button
-                              variant="secondary"
-                              size="sm"
-                              className="rounded-pill px-3 mt-3"
-                              onClick={() => {
-                                setIsFinished(false); // ✅ reset typing state
-                                setText(history[0]);
-                              }}
-                            >
-                              ← Previous Version
-                            </Button>
-
-                          )}
-                        </div>
-                      )}
-                    </>
-                  )}
-
-                </Card.Body>
-              </div>
-            </Card>
-
-            <img
-              ref={triggerImgRef}
-              src="./top.png"
-              alt="trigger base"
-              style={{
-                position: "absolute",
-                bottom: "0.1rem",
-                right: "0.1rem",
-                width: "48px",
-                opacity: 0,
-                zIndex: 999, // < 卡片的 zIndex: 100
-                pointerEvents: "none",
-              }}
-            />
+            </div>
           </div>
+
+
+          {/* Large window - 統一 transform 區塊 */}
+          <div
+            style={{
+              flex: "1 1 400px",
+              maxWidth: "1000px",
+              perspective: "1200px",
+              transformStyle: "preserve-3d",
+              transition: "transform 0.6s ease-out",
+            }}
+            className="d-flex justify-content-center me-2"
+          >
+            <div
+              style={{
+                transform: "rotateX(10deg) rotateY(-15deg)",
+                transformStyle: "preserve-3d",
+                position: "relative",
+                width: "100%",
+              }}
+            >
+              <img
+                ref={imgRef}
+                src="./email.jpg"
+                alt="email screenshot"
+                className="rounded shadow"
+                style={{
+                  width: "100%",
+                  display: "block",
+                  pointerEvents: "none",
+                }}
+              />
+
+
+              {/* ✅ AI Chat Window Card */}
+              <Card
+                ref={cardRef}
+                className="position-absolute text-white"
+                style={{
+                  bottom: 0,
+                  right: 0,
+                  width: "320px",
+                  backgroundColor: "rgb(51,51,51)",
+                  margin: "1rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  maxHeight: "90%",
+                  zIndex: 100, // ⬆ 在 top.png 之上
+                  transform: "translateX(100px)", // 👈 初始從右邊滑入
+                  opacity: 0, // 👈 初始透明，等待動畫出現
+                  pointerEvents: "auto",
+                }}
+              >
+                <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
+                  <span className="small">Mouse’s AI Chat Window</span>
+                  <span style={{ cursor: "pointer" }}>×</span>
+                </Card.Header>
+
+                <div
+                  ref={scrollRef}
+                  style={{
+                    overflowY: "auto",
+                    flexGrow: 1,
+                    maxHeight: "100%",
+                  }}
+                >
+
+                  <Card.Body>
+                    <Card.Title className="fs-5 text-center">How may I help you?</Card.Title>
+                    <InputGroup className="mb-3  ">
+                      <Form.Control
+                        placeholder="Ask me anything..."
+                        className="bg-dark text-white border placeholder-white border-secondary font-monospace "
+                        readOnly
+
+                      />
+                      <Button variant="secondary" >↑</Button>
+                    </InputGroup>
+
+
+                    <p className="small mb-1">Suggested Prompts:</p>
+                    <div
+                      className="d-flex flex-wrap gap-2 mb-3 "
+                      ref={el => (btnContainerRef.current = el)} // <== 你要加這個
+                      style={{
+                        visibility: "hidden", // ✅ 不佔空間
+                        height: 0,             // ✅ 不撐開高度
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Button
+                        ref={setBtnRef}
+                        variant={activeBtn === "accept" ? "dark" : "secondary"}
+                        size="sm"
+                        className={`rounded-pill px-3 ${activeBtn === "accept" ? "border border-white" : ""
+                          }`}
+                        onClick={() => {
+                          userInteractedRef.current = true;
+                          setActiveBtn("accept");
+                          handlePrompt("accept");
+                        }}
+                      >
+                        Write Acceptance Email
+                      </Button>
+
+                      <Button
+                        ref={setBtnRef}
+                        variant={activeBtn === "decline" ? "dark" : "secondary"}
+                        size="sm"
+                        className={`rounded-pill px-3 ${activeBtn === "decline" ? "border border-white" : ""
+                          }`}
+                        onClick={() => {
+                          userInteractedRef.current = true;
+                          setActiveBtn("decline");
+                          handlePrompt("decline");
+                        }}
+                      >
+                        Write Decline Email
+                      </Button>
+
+                      <Button
+                        ref={setBtnRef}
+                        variant={activeBtn === "translate" ? "dark" : "secondary"}
+                        size="sm"
+                        className={`rounded-pill px-3 ${activeBtn === "translate" ? "border border-white" : ""
+                          }`}
+                        onClick={() => {
+                          userInteractedRef.current = true;
+                          setActiveBtn("translate");
+                          handlePrompt("translate");
+                        }}
+                      >
+                        Translate / 翻譯
+                      </Button>
+                    </div>
+
+                    {showHr && <hr />}
+                    {/* ✅ AI回應打字效果 */}
+                    {text && (
+                      <>
+                        <TypingText
+                          text={text}
+                          speed={speed}
+                          onFinished={() => {
+                            setIsFinished(true);
+
+                            // ✅ 自動滾到底部，讓使用者看到按鈕
+                            setTimeout(() => {
+                              scrollRef.current?.scrollTo({
+                                top: scrollRef.current.scrollHeight,
+                                behavior: "smooth",
+                              });
+                            }, 0);
+                          }}
+                        />
+                        {isFinished && activeBtn !== "translate" && (
+                          <div className="d-flex gap-2 mt-2">
+                            {history.length === 1 && text === history[0] && (
+
+
+
+                              <Button
+                                variant="secondary"
+                                size="sm"
+                                className="rounded-pill px-3 mt-3"
+                                onClick={() => handlePrompt(activeBtn, true)}
+                              >
+                                Make it longer
+                              </Button>
+                            )}
+
+                            {history.length === 1 && text !== history[0] && (
+                              <Button
+                                variant="secondary"
+                                size="sm"
+                                className="rounded-pill px-3 mt-3"
+                                onClick={() => {
+                                  setIsFinished(false); // ✅ reset typing state
+                                  setText(history[0]);
+                                }}
+                              >
+                                ← Previous Version
+                              </Button>
+
+                            )}
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                  </Card.Body>
+                </div>
+              </Card>
+
+              <img
+                ref={triggerImgRef}
+                src="./top.png"
+                alt="trigger base"
+                style={{
+                  position: "absolute",
+                  bottom: "0.1rem",
+                  right: "0.1rem",
+                  width: "48px",
+                  opacity: 0,
+                  zIndex: 999, // < 卡片的 zIndex: 100
+                  pointerEvents: "none",
+                }}
+              />
+            </div>
+          </div>
+
+
         </div>
-
-
       </div>
-    </div>
     </>
 
   );

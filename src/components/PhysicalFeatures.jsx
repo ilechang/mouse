@@ -13,14 +13,11 @@ export default function PhysicalFeatures() {
       // 滑鼠圖片動畫
       gsap.fromTo(
         imageRef.current,
-        {
-          opacity: 0,
-          x: '-60vw',
-        },
+        { opacity: 0, x: '-60vw' },
         {
           opacity: 1,
           x: 0,
-          duration: 1,
+          duration: 1.1,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: containerRef.current,
@@ -28,13 +25,13 @@ export default function PhysicalFeatures() {
             toggleActions: 'play none none none',
           },
         }
-      );
+      )
 
-      // features 標題逐字動畫
+      // 標題逐字動畫
       gsap.to('.feature-letter', {
         opacity: 1,
         y: 0,
-        stagger: 0.03,
+        stagger: 0.06,
         duration: 0.6,
         ease: 'power2.out',
         scrollTrigger: {
@@ -42,63 +39,173 @@ export default function PhysicalFeatures() {
           start: 'top bottom-=300',
           toggleActions: 'play none none none',
         },
-      });
-    }, containerRef); // ✅ wrap everything inside one context
+      })
+    }, containerRef)
 
-    return () => ctx.revert();
-  }, []);
-
+    return () => ctx.revert()
+  }, [])
 
   return (
     <div
       ref={containerRef}
       style={{
-        height: '100vh',
+        minHeight: '100vh', // ✅ 至少一個螢幕高
+        display: 'flex',
+        flexDirection: 'column',
         background: 'linear-gradient(to bottom, white 20%, rgb(31, 31, 31) 20%)',
         position: 'relative',
         overflow: 'hidden',
+        paddingBottom: '80px' // ✅ 底部多留 100px
       }}
     >
-      <h1
-        style={{
-          fontSize: '6vw',
-          color: 'black',
-          margin: 0,
-          display: 'flex',
-          gap: '0.1em',
-          position: 'absolute',
-          top: '5%',
-          left: '40%',
-          transform: 'translateX(-50%)',
-        }}
-      >
-        {'Final Design'.split('').map((char, index) => (
-          <span
-            key={index}
-            className="feature-letter"
-            style={{
-              opacity: 0,
-              transform: 'translateY(20px)',
-              display: 'inline-block',
-            }}
-          >
-            {char}
-          </span>
-        ))}
-      </h1>
+      {/* ===== 上方標題與大圖 ===== */}
+      <div style={{ flex: '0 0 auto', position: 'relative' }}>
+        <h1
+          style={{
+            fontSize: '6vw',
+            color: 'black',
+            margin: 0,
+            display: 'flex',
+            gap: '0.1em',
+            position: 'absolute',
+            top: '220px',
+            left: '40%',
+            transform: 'translateX(-50%)',
+          }}
+          className="p-5"
+        >
+          {'Final Design'.split('').map((char, index) => (
+            <span
+              key={index}
+              className="feature-letter"
+              style={{
+                opacity: 0,
+                transform: 'translateY(20px)',
+                display: 'inline-block',
+              }}
+            >
+              {char}
+            </span>
+          ))}
+        </h1>
 
-      <img
-        ref={imageRef}
-        src="./perspective.png"
-        alt="Mouse"
-        style={{
-          position: 'absolute',
-          top: '0%',
-          right: '10%',
-          width: '40vw',
-          maxWidth: '500px',
-        }}
-      />
+        <img
+          ref={imageRef}
+          src="./perspective.png"
+          alt="Mouse"
+          style={{
+            position: 'absolute',
+            top: '100px',
+            right: '5%',
+            width: '35vw',
+            maxWidth: '700px',
+          }}
+        />
+      </div>
+
+      {/* ===== 中間內容 ===== */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', marginTop: "30px" }}>
+        {/* Forepalm Support 區塊 */}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '3rem',
+            padding: '2rem',
+            marginTop: '60vh',
+            color: '#fff',
+          }}
+          className="mx-auto "
+        >
+          <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
+            <img src="./vent.png" alt="Dual-Layer Design" style={{ width: '550px', height: 'auto' }} />
+          </div>
+          <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
+            <img src="./grip.png" alt="Wrist & Forepalm Support" style={{ width: '300px', height: 'auto' }} />
+          </div>
+        </div>
+
+        <div style={{ textAlign: 'center' }}>
+          <h3
+            style={{
+              
+              display: 'inline-block',
+              paddingBottom: '0.3rem',
+              borderBottom: '2px solid white',
+            }}
+            className="pb-3"
+          >
+            Forepalm Support with Maximum Ventilation
+          </h3>
+        </div>
+        <p
+          style={{
+            fontSize: '0.9rem',
+            lineHeight: 1.5,
+            maxWidth: '60%',
+            margin: '0 auto',
+            textAlign: 'center',
+          }}
+          className="pt-3 pb-5"
+        >
+          The mouse supports the user’s forepalm, allowing the wrist to rest naturally on the desk
+          while leaving a gap in the palm for airflow. Combined with a dual-layer structure and
+          ventilation ports, it enhances overall breathability and comfort, keeping the hand dry
+          even during extended use.
+        </p>
+
+        {/* Adjustable Width 區塊 */}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '10rem',
+            padding: '2rem',
+            marginTop: '10vh',
+            color: '#fff',
+          }}
+          className="mx-auto py-5"
+        >
+          <div style={{ flex: '0 0 auto', textAlign: 'center' }} className="mt-5">
+            <img src="./adjust.png" alt="Adjustment" style={{ width: '300px', height: 'auto' }} />
+          </div>
+          <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
+            <img src="./width.png" alt="Width Adjustment" style={{ width: '280px', height: 'auto' }} />
+          </div>
+        </div>
+
+        <div style={{ textAlign: 'center' }}>
+          <h3
+            style={{
+              
+              display: 'inline-block',
+              paddingBottom: '0.3rem',
+              borderBottom: '2px solid white',
+            }}
+            className="pb-3"
+          >
+            Adjustable Width
+          </h3>
+        </div>
+        <p
+          style={{
+            fontSize: '0.9rem',
+            lineHeight: 1.5,
+            maxWidth: '60%',
+            margin: '0 auto',
+            textAlign: 'center',
+          }}
+          className="pt-3 pb-5"
+        >
+          Effortlessly tailor the mouse’s width with the bottom adjustment wheel to perfectly fit
+          your hand. Make changes while holding the mouse and experience instant, tactile feedback
+          for a truly personalized fit.
+        </p>
+      </div>
     </div>
   )
 }

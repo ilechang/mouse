@@ -16,7 +16,7 @@ import { RGBELoader } from 'three-stdlib'; // 別忘了這行！
 
 
 const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
-  const gltf = useGLTF('/112233.glb');
+  const gltf = useGLTF('/1122333.glb');
   const cameraRef = useRef();
   const controlsRef = useRef();
 
