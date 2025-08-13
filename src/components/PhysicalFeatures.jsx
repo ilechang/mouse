@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+
 gsap.registerPlugin(ScrollTrigger)
 
 export default function PhysicalFeatures() {
@@ -49,13 +50,13 @@ export default function PhysicalFeatures() {
     <div
       ref={containerRef}
       style={{
-        minHeight: '100vh', // ✅ 至少一個螢幕高
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         background: 'linear-gradient(to bottom, white 20%, rgb(31, 31, 31) 20%)',
         position: 'relative',
         overflow: 'hidden',
-        paddingBottom: '80px' // ✅ 底部多留 100px
+        paddingBottom: '80px'
       }}
     >
       {/* ===== 上方標題與大圖 ===== */}
@@ -68,7 +69,7 @@ export default function PhysicalFeatures() {
             display: 'flex',
             gap: '0.1em',
             position: 'absolute',
-            top: '220px',
+            top: '50px',
             left: '40%',
             transform: 'translateX(-50%)',
           }}
@@ -95,7 +96,7 @@ export default function PhysicalFeatures() {
           alt="Mouse"
           style={{
             position: 'absolute',
-            top: '100px',
+            top: '0px',
             right: '5%',
             width: '35vw',
             maxWidth: '700px',
@@ -103,9 +104,8 @@ export default function PhysicalFeatures() {
         />
       </div>
 
-      {/* ===== 中間內容 ===== */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', marginTop: "30px" }}>
-        {/* Forepalm Support 區塊 */}
+      {/* ===== Forepalm Support（深色區） ===== */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', marginTop: '30px' }}>
         <div
           style={{
             display: 'flex',
@@ -114,7 +114,7 @@ export default function PhysicalFeatures() {
             alignItems: 'center',
             gap: '3rem',
             padding: '2rem',
-            marginTop: '60vh',
+            marginTop: '50vh',
             color: '#fff',
           }}
           className="mx-auto "
@@ -130,7 +130,6 @@ export default function PhysicalFeatures() {
         <div style={{ textAlign: 'center' }}>
           <h3
             style={{
-              
               display: 'inline-block',
               paddingBottom: '0.3rem',
               borderBottom: '2px solid white',
@@ -147,6 +146,7 @@ export default function PhysicalFeatures() {
             maxWidth: '60%',
             margin: '0 auto',
             textAlign: 'center',
+            color: '#fff',
           }}
           className="pt-3 pb-5"
         >
@@ -155,57 +155,9 @@ export default function PhysicalFeatures() {
           ventilation ports, it enhances overall breathability and comfort, keeping the hand dry
           even during extended use.
         </p>
-
-        {/* Adjustable Width 區塊 */}
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '10rem',
-            padding: '2rem',
-            marginTop: '10vh',
-            color: '#fff',
-          }}
-          className="mx-auto py-5"
-        >
-          <div style={{ flex: '0 0 auto', textAlign: 'center' }} className="mt-5">
-            <img src="./adjust.png" alt="Adjustment" style={{ width: '300px', height: 'auto' }} />
-          </div>
-          <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
-            <img src="./width.png" alt="Width Adjustment" style={{ width: '280px', height: 'auto' }} />
-          </div>
-        </div>
-
-        <div style={{ textAlign: 'center' }}>
-          <h3
-            style={{
-              
-              display: 'inline-block',
-              paddingBottom: '0.3rem',
-              borderBottom: '2px solid white',
-            }}
-            className="pb-3"
-          >
-            Adjustable Width
-          </h3>
-        </div>
-        <p
-          style={{
-            fontSize: '0.9rem',
-            lineHeight: 1.5,
-            maxWidth: '60%',
-            margin: '0 auto',
-            textAlign: 'center',
-          }}
-          className="pt-3 pb-5"
-        >
-          Effortlessly tailor the mouse’s width with the bottom adjustment wheel to perfectly fit
-          your hand. Make changes while holding the mouse and experience instant, tactile feedback
-          for a truly personalized fit.
-        </p>
       </div>
+
+
     </div>
   )
 }

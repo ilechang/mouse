@@ -8,6 +8,7 @@ import { AiSimulation } from "./components/AiSimulation";
 import { useRef } from "react";
 import MouseMacroPage from "./components/MouseMacroPage";
 import PhysicalFeatures from "./components/PhysicalFeatures";
+import AdjustableWidth from "./components/AdjustableWidth";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -27,15 +28,16 @@ function App() {
         {/* <div className="buffer-section" style={{ height: '30vh' }} /> */}
         <GameSection triggerPreview={handlePreview} />
       </div>
-          <R3FViewer ref={webgiViewerRef} />  
-      </div>
-      <Research/>
-      <PhysicalFeatures/>
-    <AiSimulation />
-  
+      <R3FViewer ref={webgiViewerRef} />
+    </div>
+    <Research />
+    <PhysicalFeatures />
+    <AdjustableWidth />
+
     <MouseMacroPage />
 
     <MultiScreen />
+    <AiSimulation />
 
   </>
   );

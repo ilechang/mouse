@@ -315,8 +315,8 @@ nav .link-styled {
 .sound-section.wrapper {
   width: 100%;
   color: #1d1d1f;
-  background-color: #fbfbfd;
-  height: 100vh;
+  background-color: #fff;
+
 }
 
 .sound-section .body {
@@ -325,9 +325,9 @@ nav .link-styled {
 }
 
 .sound-section .content {
-  max-width: 490px;
+
   width: 100%;
-  padding: 200px 0;
+
   display: flex;
   align-items: center;
   flex-direction: column;
