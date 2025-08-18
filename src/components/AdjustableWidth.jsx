@@ -7,7 +7,7 @@ export default function AdjustableWidth() {
         background: '#fff',
         color: '#111',
         paddingTop: '4rem',
-        paddingBottom: '4rem',
+
         paddingBottom: '100px'
       }}
     >

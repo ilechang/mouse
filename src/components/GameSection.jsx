@@ -9,27 +9,29 @@ function GameSection({ triggerPreview }) {
     <div
       className="display-section d-flex align-items-center"
       style={{
-        backgroundImage: 'url("gamingbg.png")',
+        height: "120vh",
+        position: "relative", // ⬅️ 讓內部的 img 可以用 absolute
+        backgroundImage: 'url("./hex.png")',
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        height: "120vh",
+        backgroundAttachment: "fixed"
       }}
     >
-      <div className="container text-white text-center">
-        <div className="row">
-        <div className="col-md-6 ms-auto position-relative" style={{ top: "-180px" }}>
-            {/* <h2 className="title">header 3</h2>
-            <p className="h3 fw-bold">product slogan 3</p>
-            <p className="description">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            </p> */}
-            {/* <button className="btn btn-light mt-3" onClick={handleScrollToTop}>
-              TOP
-            </button> */}
-          </div>
-        </div>
-      </div>
+      {/* ⬇️ 圖片固定在右下角，無空隙 */}
+      <img
+        src="./gamingbg.png"
+        alt=""
+        style={{
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          width: "auto",     // ✅ 或設百分比寬度
+          height: "auto",
+          maxWidth: "100%",  // ✅ 防止超出
+          maxHeight: "100%", // ✅ 防止超出
+        }}
+      />
     </div>
   );
 }

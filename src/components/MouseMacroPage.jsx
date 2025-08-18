@@ -1,137 +1,90 @@
 
-import React, { useState } from 'react';
+
+
+
+
+
+
+
+import React, { useState } from "react";
 
 const profiles = {
-  'VS Code': {
-    'Left Mouse Click': 'Select',
-    'Right Mouse Click': 'Context Menu',
-    'Scroll Click': 'Open Link',
-    'Scroll Up': 'Scroll Up',
-    'Scroll Down': 'Scroll Down',
-    'Scroll Left': 'Switch Tab Left',
-    'Scroll Right': 'Switch Tab Right',
-    'Start/Stop Video': 'Toggle Terminal',
-    'Mute/Unmute': 'Command Palette',
-    'Share Screen': 'Search Files',
-    'Disable 1': 'Disable',
-    'Disable 2': 'Disable',
-  },
-  'Photoshop': {
-    'Left Mouse Click': 'Brush',
-    'Right Mouse Click': 'Eyedropper',
-    'Scroll Click': 'Hand Tool',
-    'Scroll Up': 'Zoom In',
-    'Scroll Down': 'Zoom Out',
-    'Scroll Left': 'Undo',
-    'Scroll Right': 'Redo',
-    'Start/Stop Video': 'New Layer',
-    'Mute/Unmute': 'Toggle Panels',
-    'Share Screen': 'Fit on Screen',
-    'Disable 1': 'Disable',
-    'Disable 2': 'Disable',
-  },
-  'Rhino': {
-    'Left Mouse Click': 'Select',
-    'Right Mouse Click': 'Repeat Last Command',
-    'Scroll Click': 'Pan',
-    'Scroll Up': 'Zoom In',
-    'Scroll Down': 'Zoom Out',
-    'Scroll Left': 'Rotate View Left',
-    'Scroll Right': 'Rotate View Right',
-    'Start/Stop Video': 'Set View',
-    'Mute/Unmute': 'Snap Toggle',
-    'Share Screen': 'Perspective Mode',
-    'Disable 1': 'Disable',
-    'Disable 2': 'Disable',
-  },
-  'Valorant': {
-    'Left Mouse Click': 'Primary Fire',
-    'Right Mouse Click': 'Aim Down Sight',
-    'Scroll Click': 'Open Map',
-    'Scroll Up': 'Next Weapon',
-    'Scroll Down': 'Melee',
-    'Scroll Left': 'Use Ability Q',
-    'Scroll Right': 'Use Ability E',
-    'Start/Stop Video': 'Use Ability C',
-    'Mute/Unmute': 'Ultimate (X)',
-    'Share Screen': 'Ping / Voice Wheel',
-    'Disable 1': 'Disable',
-    'Disable 2': 'Disable',
-  },
-  'THE FINALS': {
-    'Left Mouse Click': 'Shoot',
-    'Right Mouse Click': 'Throw Grenade',
-    'Scroll Click': 'Equip Skill',
-    'Scroll Up': 'Switch to Main Weapon',
-    'Scroll Down': 'Switch to Tool',
-    'Scroll Left': 'Grapple / Dash',
-    'Scroll Right': 'Interact / Revive',
-    'Start/Stop Video': 'Use Healing Item',
-    'Mute/Unmute': 'Voice Chat',
-    'Share Screen': 'Ping Enemy',
-    'Disable 1': 'Disable',
-    'Disable 2': 'Disable',
-  },
+  standard: "./standardprofile.png",
+  photoshop: "./psprofile.png",
+  vscode: "./vscodeprofile.png",
+  dota2: "./dota2profile.png",
+  lol: "./lolprofile.png",
 };
 
-export default function MouseProfile() {
-  const [currentProfile, setCurrentProfile] = useState('VS Code');
-  const bindings = profiles[currentProfile];
+const profileOptions = [
+  { key: "standard", label: "Standard" },
+  { key: "photoshop", label: "Photoshop" },
+  { key: "Rhino", label: "Rhino" },
+  { key: "vscode", label: "VS Code" },
+  { key: "dota2", label: "Dota 2" },
+  { key: "lol", label: "LoL" },
+  { key: "CS2", label: "CS2" },
+];
+
+export default function MouseProfile({ hoveredProfile, committedProfile }) {
+  const displayProfile = hoveredProfile || committedProfile;
 
   return (
-    <div className="min-vh-100  text-white d-flex flex-column align-items-center px-3 py-5" style={{backgroundColor:"rgb(31,31,31)"}}>
-      <h1 className="display-6 fw-bold mb-3">Automatic Profile Switching </h1>
-      <p className="text-secondary text-center mb-4" style={{ maxWidth: '600px' }}>
-      Seamlessly adapts to every app or game, with optimized experience on multi-monitor setups.
+    <div
+      className="min-vh-100 text-white d-flex flex-column align-items-center px-3 py-5"
+      style={{ backgroundColor: "rgb(31,31,31)" }}
+    >
+      <h1 className="display-6 fw-bold mb-3">Automatic Profile Switching</h1>
+      <p
+        className="text-secondary text-center mb-4"
+        style={{ maxWidth: "600px" }}
+      >
+        Seamlessly adapts to every app or game, with optimized experience on
+        multi-monitor setups.
       </p>
 
-
-
-      {/* Mouse and Labels */}
-      <div className="position-relative" style={{ width: '400px', height: '500px' }}>
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ width: "90%" }}
+      >
         <img
-          src="/top.png"
-          alt="Mouse"
-          className="img-fluid h-100 w-100 object-fit-contain"
-          style={{ objectFit: 'contain' }}
+          src={profiles[displayProfile]}
+          alt={displayProfile}
+          className="img-fluid"
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+            objectFit: "contain",
+            pointerEvents: "none",
+          }}
         />
+      </div>
 
-        {Object.entries(bindings).map(([label, value], index) => {
-          const isLeft = index < 6;
-          const topOffset = 20 + index * 35;
-
+      <div className="d-flex flex-wrap justify-content-center gap-2 mb-4 mt-4">
+        {profileOptions.map(({ key, label }) => {
+          const isActive = displayProfile === key;
           return (
-            <div
-              key={label}
-              className={`position-absolute ${isLeft ? 'text-start' : 'text-end'}`}
+            <button
+              key={key}
+              className={`btn btn-sm px-4 py-2 mx-2 ${
+                isActive ? "text-dark" : "btn-outline-light"
+              }`}
               style={{
-                top: `${topOffset}px`,
-                left: isLeft ? '-180px' : 'auto',
-                right: isLeft ? 'auto' : '-180px',
+                backgroundColor: isActive ? "#fff" : "transparent",
+                borderColor: "#fff",
+                color: isActive ? "black" : "#fff",
+                boxShadow: isActive
+                  ? "0 0 30px rgba(0, 123, 255)"
+                  : "none",
+                transition: "all 0.2s ease-in-out",
               }}
             >
-              <div className="fw-semibold text-success">{label}</div>
-              <div className="small text-secondary">{value}</div>
-            </div>
+              {label}
+            </button>
           );
         })}
       </div>
-
-            {/* Profile Buttons */}
-            <div className="d-flex flex-wrap justify-content-center gap-2 mb-4">
-        {Object.keys(profiles).map((profile) => (
-          <button
-            key={profile}
-            className={`btn btn-sm ${
-              currentProfile === profile ? 'btn-success text-dark' : 'btn-outline-light'
-            }`}
-            onClick={() => setCurrentProfile(profile)}
-          >
-            {profile}
-          </button>
-        ))}
-      </div>
-      
     </div>
   );
 }

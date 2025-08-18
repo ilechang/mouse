@@ -91,7 +91,7 @@ const R3FViewer = forwardRef((props, ref) => {
         left: "-42%",
         width: '160vw',
         height: '100vh',
-        zIndex: 0,
+        zIndex:1000,
       }}
     >
       <Canvas>

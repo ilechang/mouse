@@ -20,6 +20,9 @@ function WorkSection() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         height: "120vh",
+       
+    
+       
       }}
     >
       <div className="container text-dark text-center">

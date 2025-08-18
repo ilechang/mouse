@@ -57,6 +57,7 @@ export default function PhysicalFeatures() {
         position: 'relative',
         overflow: 'hidden',
         paddingBottom: '80px'
+        
       }}
     >
       {/* ===== 上方標題與大圖 ===== */}
