@@ -326,6 +326,7 @@ ABC Design`;
                   transform: "translateX(100px)", // 👈 初始從右邊滑入
                   opacity: 0, // 👈 初始透明，等待動畫出現
                   pointerEvents: "auto",
+                  textAlign: "left", // 確保文字對齊方式正確
                 }}
               >
                 <Card.Header className="bg-secondary  py-2 px-3 d-flex justify-content-between align-items-center">
