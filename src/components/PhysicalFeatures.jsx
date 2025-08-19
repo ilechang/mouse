@@ -50,14 +50,21 @@ export default function PhysicalFeatures() {
     <div
       ref={containerRef}
       style={{
-        minHeight: '100vh',
+        minHeight: '120vh',
         display: 'flex',
         flexDirection: 'column',
-        background: 'linear-gradient(to bottom, white 20%, rgb(31, 31, 31) 20%)',
         position: 'relative',
         overflow: 'hidden',
-        paddingBottom: '80px'
-        
+        paddingBottom: '80px',
+    
+        // 上層：前 20% 白色；之後透明
+        // 下層：hex.png
+        backgroundImage:
+          'linear-gradient(to bottom, white 0%, white 20%, rgba(255,255,255,0) 20%), url("./hex.png")',
+        backgroundSize: '100% 100%, cover',
+        backgroundPosition: 'top left, center',
+        backgroundRepeat: 'no-repeat, no-repeat',
+        backgroundAttachment: 'scroll, fixed',
       }}
     >
       {/* ===== 上方標題與大圖 ===== */}
@@ -71,24 +78,35 @@ export default function PhysicalFeatures() {
             gap: '0.1em',
             position: 'absolute',
             top: '50px',
-            left: '40%',
+            left: '48%',
             transform: 'translateX(-50%)',
           }}
           className="p-5"
         >
-          {'Final Design'.split('').map((char, index) => (
-            <span
-              key={index}
-              className="feature-letter"
-              style={{
-                opacity: 0,
-                transform: 'translateY(20px)',
-                display: 'inline-block',
-              }}
-            >
-              {char}
-            </span>
-          ))}
+          <div style={{ display: "flex", gap: "0px" }}>
+            {"Final Design".split("").map((char, index) => (
+              char === " " ? (
+                <span
+                  key={index}
+                  style={{ display: "inline-block", width: "0.2em" }} // 調整空格寬度
+                />
+              ) : (
+                <span
+                  key={index}
+                  className="feature-letter fw-bold"
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(20px)",
+                    display: "inline-block",
+                  }}
+    
+                >
+                  {char}
+                </span>
+              )
+            ))}
+          </div>
+
         </h1>
 
         <img
@@ -128,8 +146,18 @@ export default function PhysicalFeatures() {
           </div>
         </div>
 
-        <div style={{ textAlign: 'center' }}>
-          <h3
+        
+
+        <h1 className="display-6 fw-bold mb-3 mt-4 text-center mx-auto ">Forepalm Support with Maximum Ventilation</h1>
+           
+           <span className="text-center mx-auto " style={{ maxWidth: "1000px" }}>
+           The mouse supports the user’s forepalm, allowing the wrist to rest naturally on the desk
+          while leaving a gap in the palm for airflow. Combined with a dual-layer structure and
+          ventilation ports, it enhances overall breathability and comfort, keeping the hand dry
+          even during extended use.
+           </span>
+       
+          {/* <h3
             style={{
               display: 'inline-block',
               paddingBottom: '0.3rem',
@@ -138,9 +166,9 @@ export default function PhysicalFeatures() {
             className="pb-3"
           >
             Forepalm Support with Maximum Ventilation
-          </h3>
-        </div>
-        <p
+          </h3> */}
+        
+        {/* <p
           style={{
             fontSize: '0.9rem',
             lineHeight: 1.5,
@@ -155,7 +183,7 @@ export default function PhysicalFeatures() {
           while leaving a gap in the palm for airflow. Combined with a dual-layer structure and
           ventilation ports, it enhances overall breathability and comfort, keeping the hand dry
           even during extended use.
-        </p>
+        </p> */}
       </div>
 
 

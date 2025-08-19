@@ -19,6 +19,7 @@ const profiles = {
 const profileOptions = [
   { key: "standard", label: "Standard" },
   { key: "photoshop", label: "Photoshop" },
+
   { key: "Rhino", label: "Rhino" },
   { key: "vscode", label: "VS Code" },
   { key: "dota2", label: "Dota 2" },
@@ -34,17 +35,16 @@ export default function MouseProfile({ hoveredProfile, committedProfile }) {
       className="min-vh-100 text-white d-flex flex-column align-items-center px-3 py-5"
       style={{ backgroundColor: "rgb(31,31,31)" }}
     >
-      <h1 className="display-6 fw-bold mb-3">Automatic Profile Switching</h1>
+      <h1 className="display-6 fw-bold mb-3 mt-5">Software/game specific profile</h1>
       <p
-        className="text-secondary text-center mb-4"
-        style={{ maxWidth: "600px" }}
+        className="text-white text-center mb-4"
+        style={{ maxWidth: "1000px" }}
       >
-        Seamlessly adapts to every app or game, with optimized experience on
-        multi-monitor setups.
+        Whether you’re working or gaming, create tailored profiles with custom keys and shortcuts — boosting productivity and delivering an immersive experience that’s uniquely yours.
       </p>
 
       <div
-        className="d-flex justify-content-center align-items-center"
+        className="my-5 d-flex justify-content-center align-items-center"
         style={{ width: "90%" }}
       >
         <img
@@ -61,15 +61,15 @@ export default function MouseProfile({ hoveredProfile, committedProfile }) {
         />
       </div>
 
-      <div className="d-flex flex-wrap justify-content-center gap-2 mb-4 mt-4">
+      <div className="d-flex flex-wrap justify-content-center gap-2 mb-0 mt-4 
+      ">
         {profileOptions.map(({ key, label }) => {
           const isActive = displayProfile === key;
           return (
             <button
               key={key}
-              className={`btn btn-sm px-4 py-2 mx-2 ${
-                isActive ? "text-dark" : "btn-outline-light"
-              }`}
+              className={`btn btn-sm px-4 py-2 mx-2 ${isActive ? "text-dark" : "btn-outline-light"
+                }`}
               style={{
                 backgroundColor: isActive ? "#fff" : "transparent",
                 borderColor: "#fff",
@@ -78,6 +78,7 @@ export default function MouseProfile({ hoveredProfile, committedProfile }) {
                   ? "0 0 30px rgba(0, 123, 255)"
                   : "none",
                 transition: "all 0.2s ease-in-out",
+
               }}
             >
               {label}

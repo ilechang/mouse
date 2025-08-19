@@ -31,8 +31,7 @@ export default function AdjustableWidth() {
         </div>
       </div>
 
-      {/* 標題 */}
-      <div style={{ textAlign: 'center' }}>
+      {/* <div style={{ textAlign: 'center' }}>
         <h3
           style={{
             display: 'inline-block',
@@ -45,7 +44,6 @@ export default function AdjustableWidth() {
         </h3>
       </div>
 
-      {/* 內文 */}
       <p
         style={{
           fontSize: '0.9rem',
@@ -58,7 +56,15 @@ export default function AdjustableWidth() {
       >
         Effortlessly tailor the mouse’s width with the bottom adjustment wheel to perfectly fit your hand.
         Make changes while holding the mouse and experience instant, tactile feedback for a truly personalized fit.
-      </p>
+      </p> */}
+
+
+      <h1 className="display-6 fw-bold mb-3 mt-4 text-center mx-auto ">    Adjustable Width</h1>
+           
+           <p className="text-center mx-auto " style={{ maxWidth: "1000px" }}>
+           Effortlessly tailor the mouse’s width with the bottom adjustment wheel to perfectly fit your hand.
+        Make changes while holding the mouse and experience instant, tactile feedback for a truly personalized fit.
+           </p>
     </section>
   )
 }

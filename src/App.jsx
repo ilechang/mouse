@@ -35,12 +35,12 @@ function App() {
   return (
     <>
       <div className="App">
-        <div id="content">
+        <div id="content" >
           <Jumbotron />
           <WorkSection />
           <GameSection triggerPreview={handlePreview} />
         </div>
-        <R3FViewer ref={webgiViewerRef} />
+        <R3FViewer ref={webgiViewerRef} style/>
       </div>
 
       <Research />

@@ -39,7 +39,7 @@ function Jumbotron() {
           <a className="link" onClick={handleLearnMore}>Learn more</a>
         </li>
       </ul>
-      <img className="iphone-img" src="./top.png" alt="iPhone" />
+      {/* <img className="iphone-img" src="./top.png" alt="iPhone" /> */}
     </div>
   ); 
 }
