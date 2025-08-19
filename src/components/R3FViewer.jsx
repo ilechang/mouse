@@ -33,6 +33,7 @@ function cloneMaterialsDeep(group) {
 }
 
 const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
+
   const gltf = useGLTF('/1122333.glb');
   const cameraRef = useRef();
   const controlsRef = useRef();
@@ -64,6 +65,7 @@ const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
 
   return (
     <>
+  <ambientLight intensity={0.3} />
       <PerspectiveCamera makeDefault ref={cameraRef} position={[1.56, 5.0, 0.01]} fov={45} />
       <OrbitControls ref={controlsRef} enabled={false} enableZoom={false} />
 
@@ -83,7 +85,7 @@ const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
       </group>
 
       <Environment files="./quad.hdr" background={false} />
-      <directionalLight position={[-10, 5, 5]} intensity={0.5} />
+      <directionalLight position={[-10, 5, 5]} intensity={2} />
 
       <ScrollAnimation
         cameraRef={cameraRef}
