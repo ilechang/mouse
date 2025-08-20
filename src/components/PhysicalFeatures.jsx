@@ -139,10 +139,10 @@ export default function PhysicalFeatures() {
           className="mx-auto "
         >
           <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
-            <img src="./vent.png" alt="Dual-Layer Design" style={{ width: '550px', height: 'auto' }} />
+            <img src="./vent.webp" alt="Dual-Layer Design" style={{ width: '550px', height: 'auto' }} />
           </div>
           <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
-            <img src="./grip.png" alt="Wrist & Forepalm Support" style={{ width: '300px', height: 'auto' }} />
+            <img src="./grip.webp" alt="Wrist & Forepalm Support" style={{ width: '300px', height: 'auto' }} />
           </div>
         </div>
 

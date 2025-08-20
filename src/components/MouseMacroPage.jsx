@@ -9,22 +9,19 @@
 import React, { useState } from "react";
 
 const profiles = {
-  standard: "./standardprofile.png",
-  photoshop: "./psprofile.png",
-  vscode: "./vscodeprofile.png",
-  dota2: "./dota2profile.png",
-  lol: "./lolprofile.png",
+  lol: "./lolprofile-min.webp",
+  photoshop: "./psprofile-min.webp",
+  vscode: "./vscodeprofile-min.webp",
 };
 
 const profileOptions = [
-  { key: "standard", label: "Standard" },
+  { key: "lol", label: "LoL" },
   { key: "photoshop", label: "Photoshop" },
-
+  { key: "dota2", label: "Dota 2" },
+  { key: "CS2", label: "CS2" },
   { key: "Rhino", label: "Rhino" },
   { key: "vscode", label: "VS Code" },
-  { key: "dota2", label: "Dota 2" },
-  { key: "lol", label: "LoL" },
-  { key: "CS2", label: "CS2" },
+
 ];
 
 export default function MouseProfile({ hoveredProfile, committedProfile }) {

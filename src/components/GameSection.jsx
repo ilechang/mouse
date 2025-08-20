@@ -20,7 +20,7 @@ function GameSection({ triggerPreview }) {
     >
       {/* ⬇️ 圖片固定在右下角，無空隙 */}
       <img
-        src="./gamingbg.png"
+        src="./gamingbg-min.webp"
         alt=""
         style={{
           position: "absolute",

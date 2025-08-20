@@ -26,7 +26,7 @@ function App() {
 
   // ⬇️ 新增 shared hover state
   const [hoveredProfile, setHoveredProfile] = useState(null);
-  const [committedProfile, setCommittedProfile] = useState("standard");
+  const [committedProfile, setCommittedProfile] = useState("lol");
 
   const handlePreview = () => {
     webgiViewerRef.current.triggerPreview();

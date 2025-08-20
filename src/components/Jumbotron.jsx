@@ -33,7 +33,7 @@ function Jumbotron() {
     >
       {/* <h2 className="title">header 1</h2> */}
       {/* <img className="logo" src={Iphone} alt="iPhone 14 Pro" /> */}
-      <h1 className="text " style={{fontSize:"9rem"}}>Tt WINGS</h1>
+      <h1 className="text " style={{fontSize:"9rem"}}>Xoskeleton</h1>
       <span className="description">
         Lorem ipsum sint occaecat cupidatat non proident, sunt in culpa qui officia.
       </span>

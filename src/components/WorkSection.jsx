@@ -15,7 +15,7 @@ function WorkSection() {
     <div
       className="sound-section d-flex align-items-center"
       style={{
-        backgroundImage: 'url("workbg.png")',
+        backgroundImage: 'url("workbg.webp")',
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

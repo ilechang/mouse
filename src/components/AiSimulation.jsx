@@ -269,7 +269,7 @@ ABC Design`;
             }}
             className="d-flex flex-column justify-content-center align-items-center text-dark text-center"
           >
-            <img src="./aichip.png" className="w-50 mb-5" alt="" />
+            <img src="./aichip.webp" className="w-50 mb-5" alt="" />
             <p>
               Copy, click, and unlock AI prompts instantly. Built-in mic and voice
               recognition make interaction effortless — no typing required.
@@ -472,7 +472,7 @@ ABC Design`;
 
               <img
                 ref={triggerImgRef}
-                src="./top.png"
+                src="./top.webp"
                 alt="trigger base"
                 style={{
                   position: "absolute",

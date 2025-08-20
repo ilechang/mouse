@@ -24,10 +24,10 @@ export default function AdjustableWidth() {
         className="mx-auto py-5"
       >
         <div style={{ flex: '0 0 auto', textAlign: 'center' }} className="mt-5">
-          <img src="./adjust.png" alt="Adjustment" style={{ width: '300px', height: 'auto' }} />
+          <img src="./adjust.webp" alt="Adjustment" style={{ width: '300px', height: 'auto' }} />
         </div>
         <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
-          <img src="./width.png" alt="Width Adjustment" style={{ width: '280px', height: 'auto' }} />
+          <img src="./width.webp" alt="Width Adjustment" style={{ width: '280px', height: 'auto' }} />
         </div>
       </div>
 
