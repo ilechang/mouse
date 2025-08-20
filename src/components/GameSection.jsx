@@ -11,7 +11,7 @@ function GameSection({ triggerPreview }) {
       style={{
         height: "120vh",
         position: "relative", // ⬅️ 讓內部的 img 可以用 absolute
-        backgroundImage: 'url("./hex.png")',
+        backgroundImage: 'url("./hex.webp")',
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

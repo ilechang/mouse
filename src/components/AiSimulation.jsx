@@ -257,7 +257,7 @@ ABC Design`;
 
   
 
-      <div className="vh-100 d-flex align-items-start sound-section mt-5">
+      <div className="vh-50 d-flex align-items-start sound-section my-5">
         <div
           className="w-100 bg-white px-5 d-flex flex-wrap justify-content-center mt-5"
 

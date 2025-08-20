@@ -60,7 +60,7 @@ export default function PhysicalFeatures() {
         // 上層：前 20% 白色；之後透明
         // 下層：hex.png
         backgroundImage:
-          'linear-gradient(to bottom, white 0%, white 20%, rgba(255,255,255,0) 20%), url("./hex.png")',
+          'linear-gradient(to bottom, white 0%, white 20%, rgba(255,255,255,0) 20%), url("./hex.webp")',
         backgroundSize: '100% 100%, cover',
         backgroundPosition: 'top left, center',
         backgroundRepeat: 'no-repeat, no-repeat',

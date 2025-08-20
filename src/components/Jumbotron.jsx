@@ -24,7 +24,8 @@ function Jumbotron() {
         textAlign: "left",           // 文字靠左對齊       // 讓文字置中對齊
         height: "100vh",
         width: "100%",
-        backgroundImage: 'url("./hex.png")',
+       backgroundImage: 'url("./hex.webp")',
+
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
