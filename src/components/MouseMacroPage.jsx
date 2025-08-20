@@ -16,9 +16,10 @@ const profiles = {
 
 const profileOptions = [
   { key: "lol", label: "LoL" },
-  { key: "photoshop", label: "Photoshop" },
+
   { key: "dota2", label: "Dota 2" },
   { key: "CS2", label: "CS2" },
+  { key: "photoshop", label: "Photoshop" },
   { key: "Rhino", label: "Rhino" },
   { key: "vscode", label: "VS Code" },
 
