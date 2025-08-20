@@ -34,7 +34,7 @@ function cloneMaterialsDeep(group) {
 
 const Scene = forwardRef(({ setPreviewMode, isMobile }, ref) => {
 
-  const gltf = useGLTF('/1122333.glb');
+  const gltf = useGLTF('/123.glb');
   const cameraRef = useRef();
   const controlsRef = useRef();
 
