@@ -33,9 +33,9 @@ function Jumbotron() {
   const desktopStyle = {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center", // 垂直置中
+   position: "relative",
     alignItems: "flex-start", // 水平靠左
-    paddingLeft: "45%",
+    paddingLeft: "41%",
     textAlign: "left",
     height: "100vh",
     width: "100%",
@@ -44,6 +44,7 @@ function Jumbotron() {
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
+
   };
 
   // 📱 手機 / 平板樣式
@@ -66,23 +67,43 @@ function Jumbotron() {
       className="jumbotron-section wrapper text-md-end"
       style={isMobile ? mobileStyle : desktopStyle}
     >
-      <div>
-        <h1 className="text" style={{ fontSize: "9rem" }}>Xoskeleton</h1>
-        <p className="description mx-auto text-center fs-4">
-          From Office Battles to Gaming Arenas — One Mouse, Total Victory.
-        </p>
-
-        <div className="d-flex">
-          <ul className="ms-auto text list-unstyled gap-3 fs-4 text-end">
-            <li>Industrial Design</li>
-            <li>3D Web Design</li>
-            <li>3D Web Development</li>
-            <li>Solo Project • 2025</li>
-          </ul>
+      {isMobile ? (
+        <div>
+          <h1 className="text" style={{ fontSize: "9rem" }}>Xoskeleton</h1>
+          <p className="description mx-auto text-end fs-4">
+            From Office Battles to Gaming Arenas — One Mouse, Total Victory.
+          </p>
+  
+          <div className="d-flex mt-5">
+            <ul className="ms-auto text list-unstyled gap-3 fs-5 text-end">
+              <li>Industrial Design</li>
+              <li>3D Web Design</li>
+              <li>3D Web Development</li>
+              <li>Solo Project • 2025</li>
+            </ul>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div style={{ position: "absolute", top: "20%" }}>
+          <h1 className="text" style={{ fontSize: "9rem" }}>Xoskeleton</h1>
+          <p className="description mx-auto text-end fs-4">
+            From Office Battles to Gaming Arenas — One Mouse, Total Victory.
+          </p>
+  
+          <div className="d-flex mt-5">
+            <ul className="ms-auto text list-unstyled gap-3 fs-5 text-end">
+              <li>Industrial Design</li>
+              <li>3D Web Design</li>
+              <li>3D Web Development</li>
+              <li>Solo Project • 2025</li>
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
+  
+
 }
 
 export default Jumbotron;
