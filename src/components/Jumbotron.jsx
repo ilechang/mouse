@@ -35,7 +35,7 @@ function Jumbotron() {
     flexDirection: "column",
    position: "relative",
     alignItems: "flex-start", // 水平靠左
-    paddingLeft: "41%",
+    paddingLeft: "43%",
     textAlign: "left",
     height: "100vh",
     width: "100%",

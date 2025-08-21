@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 import React, { useState } from "react";
 
 const profiles = {
@@ -30,7 +22,7 @@ export default function MouseProfile({ hoveredProfile, committedProfile }) {
 
   return (
     <div
-      className="min-vh-100 text-white d-flex flex-column align-items-center px-3 py-5"
+      className="min-vh-50 text-white d-flex flex-column align-items-center px-3 py-5"
       style={{ backgroundColor: "rgb(31,31,31)" }}
     >
       <h1 className="display-6 fw-bold mb-3 mt-5">Software/game specific profile</h1>
