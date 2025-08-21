@@ -22,8 +22,8 @@ const personas = [
       environment: 'Dual monitors and drawing tablet on a large desk',
     },
     {
-      name: 'Justin L',
-      age: 29,
+      name: 'Justin T',
+      age: 30,
       role: 'Digital Marketer / Video Editor',
       quote: 'I type slowly, so I rely on AI and copy-paste. My mouse helps me avoid switching to the keyboard.',
       tools: 'ChatGPT, Midjourney, After Effects, Keynote, Wix',
@@ -33,7 +33,7 @@ const personas = [
     },
     {
       name: 'George C',
-      age: 33,
+      age: 29,
       role: 'Software Developer',
       quote: 'With AI helping me code, I now use the mouse more for taking screenshots and copying error messages to debug. Also, I constantly move my cursor between two monitors, so a high-DPI, multi-button mouse really improves my speed and overall workflow.',
       tools: 'GitHub Copilot, ChatGPT, VS Code',
@@ -41,6 +41,26 @@ const personas = [
       habits: 'Uses high-DPI and fast navigation settings',
       environment: 'Home office with dual monitors on a compact desk',
     },
+    {
+        "name": "David M",
+        "age": 37,
+        "role": "Interior Designer",
+        "quote": "For the sake of portability, I often bring my small laptop to client meetings or construction sites. But with my big old hands, using that tiny keyboard and touch pad is really inconvenient.",
+        "tools": "AutoCAD, SketchUp, Photoshop, Revit, Rhino, Keynote",
+        "painPoints": "Tiny laptop keyboard and touch pad uncomfortable for big hands",
+        "habits": "Prefers an external mouse for design work and quick operations",
+        "environment": "Often travels between client offices and job sites"
+      },
+      {
+        name: 'Sophia W',
+        age: 31,
+        role: 'Data Analyst',
+        quote: 'I spend hours in Excel and Tableau every day. Dragging fields, adjusting filters, and building dashboards is fast with a mouse—but switching constantly between keyboard and mouse sometimes slows me down.',
+        tools: 'Excel, Tableau, Power BI, Python, SQL',
+        painPoints: 'Frequent mouse-keyboard switching, repetitive drag-and-drop actions, wrist fatigue after long sessions',
+        habits: 'Customizes shortcuts but still relies heavily on mouse for visual manipulation',
+        environment: 'Dual-monitor workstation with one screen dedicated to dashboards and another for code/queries'
+      }
   ];
   
 
@@ -50,10 +70,11 @@ export default function Research() {
         <div className="container py-4 font-sans px-2">
             <h2 className=" mb-4 text-dark text-center mt-5  fs-1">Project Overview</h2>
             <p className=' text-dark '>
-            We’re helping our client expand beyond the gaming market with a next-gen mouse designed for both gamers and creative professionals. It combines high performance, AI integration, and intuitive usability—bridging gaming and productivity without compromise.
+            I helped my client expand beyond the gaming market with a next-gen mouse designed for both gamers and creative professionals. Having accumulated extensive experience in gaming mice*, my client was ready to cross over into the productivity space. I assisted by integrating high performance, AI-powered features, and intuitive usability—bridging gaming and professional workflows without compromise.
             </p>
 
             <h2 className="mt-5 mb-4 text-center text-dark fs-1">User Interviews</h2>
+            
             <div className="row">
                 {personas.map((p, i) => (
                     <div key={i} className="col-md-6 mb-4 d-flex">
@@ -79,6 +100,9 @@ export default function Research() {
                     </div>
                 ))}
             </div>
+            <p className="text-secondary text-end">
+  <em>Note: These interviews were work-oriented, given my client’s prior expertise in gaming mouse design.</em>
+</p>
             <img src="./sketch.png" alt="" className="d-block mx-auto" />
             </div>
         </div>

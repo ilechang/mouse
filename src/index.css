@@ -254,8 +254,9 @@ nav .link-styled {
   min-width: 28px;
   padding: 8px 16px;
   border-radius: 980px;
-  margin: 0 14px;
+  margin: 20px 10px;
   border-color: #000;
+  border: #000;
 }
 
 .jumbotron-section .link {
