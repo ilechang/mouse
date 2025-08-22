@@ -4,18 +4,64 @@ import gsap from "gsap";
 
 function MultiScreen({ setHoveredProfile }) {
   const screens = [
-    { label: "LoL", profileKey: "lol", imgSrc: "/lol.jpg", transformStyle: "rotateY(15deg) scale(0.8)", marginStyle: { marginRight: "clamp(-100px, -8vw, -40px)" }, widthClamp: "clamp(600px, 50vw, 700px)" },
-    { label: "Photoshop", profileKey: "photoshop", imgSrc: "/ps.jpg", transformStyle: "scale(0.9)", marginStyle: { margin: "0 clamp(4px, 1vw, 12px)" }, widthClamp: "clamp(500px, 37vw, 600px)" },
-    { label: "VS Code", profileKey: "vscode", imgSrc: "/vscode.jpg", transformStyle: "rotateY(-15deg) scale(0.8)", marginStyle: { marginLeft: "clamp(-100px, -8vw, -40px)" }, widthClamp: "clamp(600px, 50vw, 700px)" },
+    {
+      label: "LoL",
+      profileKey: "lol",
+      imgSrc: "/lol.jpg",
+      transformStyle: "rotateY(15deg) scale(0.8)",
+      marginStyle: { marginRight: "clamp(-100px, -8vw, -40px)" },
+      widthClamp: "clamp(600px, 50vw, 700px)",
+    },
+    {
+      label: "Photoshop",
+      profileKey: "photoshop",
+      imgSrc: "/ps.jpg",
+      transformStyle: "scale(0.9)",
+      marginStyle: { margin: "0 clamp(4px, 1vw, 12px)" },
+      widthClamp: "clamp(500px, 37vw, 600px)",
+    },
+    {
+      label: "VS Code",
+      profileKey: "vscode",
+      imgSrc: "/vscode.jpg",
+      transformStyle: "rotateY(-15deg) scale(0.8)",
+      marginStyle: { marginLeft: "clamp(-100px, -8vw, -40px)" },
+      widthClamp: "clamp(600px, 50vw, 700px)",
+    },
   ];
 
-  // ✅ 讓 LoL 一開始就亮藍光（index 0 = true）
   const defaultHover = screens.map((_, idx) => idx === 0);
   const [hovered, setHovered] = useState(defaultHover);
   const [showCard, setShowCard] = useState(() => screens.map(() => false));
+  const [isMobile, setIsMobile] = useState(false);
 
   const cardRefs = useRef(screens.map(() => React.createRef()));
   const hideTimers = useRef(screens.map(() => null));
+
+  useEffect(() => {
+    const checkSize = () => {
+      const mobile = (window.visualViewport?.width || window.innerWidth) <= 1150;
+      setIsMobile(mobile);
+
+      if (mobile) {
+        // ✅ 手機 → 固定 Photoshop 亮，但不顯示卡片
+        setHovered(screens.map((_, idx) => idx === 1));
+        setShowCard(screens.map(() => false));
+        if (setHoveredProfile) setHoveredProfile(screens[1].profileKey);
+      } else {
+        setHovered(defaultHover);
+        setShowCard(screens.map(() => false));
+      }
+    };
+    checkSize();
+    window.visualViewport?.addEventListener("resize", checkSize);
+    window.addEventListener("resize", checkSize);
+
+    return () => {
+      window.visualViewport?.removeEventListener("resize", checkSize);
+      window.removeEventListener("resize", checkSize);
+    };
+  }, [setHoveredProfile]);
 
   useEffect(() => {
     cardRefs.current.forEach((ref) => {
@@ -52,25 +98,21 @@ function MultiScreen({ setHoveredProfile }) {
   };
 
   const handleMouseEnter = (i) => {
-    // ✅ 只讓目前 hover 的這張亮，其餘全關
+    if (isMobile) return;
     setHovered(screens.map((_, idx) => idx === i));
-
     clearTimer(i);
     setShowCard((prev) => prev.map((v, idx) => (idx === i ? true : v)));
     hideTimers.current[i] = setTimeout(() => {
       setShowCard((prev) => prev.map((v, idx) => (idx === i ? false : v)));
     }, 1200);
-
     if (setHoveredProfile) setHoveredProfile(screens[i].profileKey);
   };
 
   const handleMouseLeave = (i) => {
-    // ✅ 滑開後恢復預設：LoL 亮，其餘關
+    if (isMobile) return;
     setHovered(defaultHover);
-
     clearTimer(i);
     setShowCard((prev) => prev.map((v, idx) => (idx === i ? false : v)));
-
     if (setHoveredProfile) setHoveredProfile(null);
   };
 
@@ -80,73 +122,74 @@ function MultiScreen({ setHoveredProfile }) {
         style={{
           position: "relative",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: isMobile ? "space-evenly" : "center",
           alignItems: "center",
-          gap: "0rem",
+          gap: isMobile ? "0.25rem" : "0rem",
           backgroundColor: "rgb(31,31,31)",
           padding: "0rem",
           flexWrap: "nowrap",
+          overflowX: isMobile ? "auto" : "visible",
+          marginBottom: isMobile ? "3rem" : "0", // ✅ 手機增加圖片與下方文字的間距
         }}
       >
         {screens.map((screen, i) => (
-          <div key={screen.label} style={{ perspective: "1200px" }}>
+          <div
+            key={screen.label}
+            style={{
+              perspective: "1200px",
+              flex: isMobile ? "0 0 32%" : "unset",
+            }}
+          >
             <div
               onMouseEnter={() => handleMouseEnter(i)}
               onMouseLeave={() => handleMouseLeave(i)}
               style={{
-                ...screen.marginStyle,
-                transform: screen.transformStyle,
+                ...(!isMobile && screen.marginStyle),
+                transform: isMobile ? "scale(0.9)" : screen.transformStyle,
                 position: "relative",
                 zIndex: hovered[i] ? 200 : 1,
-                boxShadow: hovered[i]
-                  ? "0 0 20px 5px rgba(0, 123, 255, 0.9)"
-                  : "none",
+                boxShadow: hovered[i] ? "0 0 20px 5px rgba(0, 123, 255, 0.9)" : "none",
                 transition: "box-shadow 0.3s ease, z-index 0s",
-                cursor: "pointer",
+                cursor: isMobile ? "default" : "pointer",
               }}
             >
-              <img src={screen.imgSrc} alt={screen.label} style={{ width: screen.widthClamp, display: "block" }} />
-
-              {showCard[i] && (
-                <img
-                  src="/top.webp"
-                  alt="trigger base"
-                  style={{
-                    position: "absolute",
-                    bottom: "0.5rem",
-                    right: "0.5rem",
-                    width: "5%",
-                    zIndex: 1001,
-                    pointerEvents: "none",
-                  }}
-                />
-              )}
-
-              <Card
-                ref={cardRefs.current[i]}
-                className="position-absolute text-white"
+              <img
+                src={screen.imgSrc}
+                alt={screen.label}
                 style={{
-                  bottom: 0,
-                  right: 0,
-                  width: "27%",
-                  backgroundColor: "rgb(51,51,51)",
-                  margin: "1rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  maxHeight: "90%",
-                  zIndex: 1000,
-                  opacity: 0,
-                  pointerEvents: "auto",
-                  fontSize: "0.8rem",
-                  boxShadow: "0 0 12px rgba(255, 255, 255, 0.15)",
+                  width: isMobile ? "100%" : screen.widthClamp,
+                  display: "block",
                 }}
-              >
-                <Card.Body className="px-3 py-2">
-                  <p className="text-white small mb-0">
-                    {`${screen.label} Profile On`}
-                  </p>
-                </Card.Body>
-              </Card>
+              />
+
+              {/* ✅ 桌機 hover 卡片；手機不顯示卡片 */}
+              {!isMobile && showCard[i] && (
+                <Card
+                  ref={cardRefs.current[i]}
+                  className="position-absolute text-white"
+                  style={{
+                    bottom: 0,
+                    right: 0,
+                    width: "27%",
+                    backgroundColor: "rgb(51,51,51)",
+                    margin: "1rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    maxHeight: "90%",
+                    zIndex: 1000,
+                    opacity: 0,
+                    pointerEvents: "auto",
+                    fontSize: "0.8rem",
+                    boxShadow: "0 0 12px rgba(255, 255, 255, 0.15)",
+                  }}
+                >
+                  <Card.Body className="px-3 py-2">
+                    <p className="text-white small mb-0">
+                      {`${screen.label} Profile On`}
+                    </p>
+                  </Card.Body>
+                </Card>
+              )}
             </div>
           </div>
         ))}

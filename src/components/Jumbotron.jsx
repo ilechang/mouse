@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 function Jumbotron() {
-  // ✅ 判斷螢幕是否小於等於 1024px
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -9,71 +8,70 @@ function Jumbotron() {
       const vw = window.visualViewport?.width || window.innerWidth;
       setIsMobile(vw <= 1150);
     };
-    checkSize(); // 初始化先跑一次
+    checkSize();
     window.visualViewport?.addEventListener("resize", checkSize);
-    window.addEventListener("resize", checkSize); // 備援 (某些瀏覽器)
+    window.addEventListener("resize", checkSize);
     return () => {
       window.visualViewport?.removeEventListener("resize", checkSize);
       window.removeEventListener("resize", checkSize);
     };
   }, []);
 
-  const handleLearnMore = () => {
-    const element = document.querySelector(".sound-section");
-    if (!element) return;
-    const top = element.getBoundingClientRect().top + window.scrollY; // 修正 scroll 位置
-    window.scrollTo({
-      top,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
-
-  // 🖥️ 桌機 / 大螢幕樣式
   const desktopStyle = {
     display: "flex",
     flexDirection: "column",
-   position: "relative",
-    alignItems: "flex-start", // 水平靠左
+    position: "relative",
+    alignItems: "flex-start",
     paddingLeft: "43%",
     textAlign: "left",
     height: "100vh",
     width: "100%",
-    backgroundImage: 'url("./hex.webp")',
+    backgroundImage: 'url("/hex.webp")',
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
-
   };
 
-  // 📱 手機 / 平板樣式
   const mobileStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    height: "100vh",
     width: "100%",
-    backgroundImage: 'url("./hex.webp")',
+    backgroundImage: 'url("/hex.webp")',
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
+    position: "relative",
+    height: "auto",
+    paddingBottom: "40px",
   };
 
   return (
     <div
-      className="jumbotron-section wrapper text-md-end"
+      className="jumbotron-section wrapper text-md-end "
       style={isMobile ? mobileStyle : desktopStyle}
     >
       {isMobile ? (
-        <div>
-          <h1 className="text" style={{ fontSize: "9rem" }}>Xoskeleton</h1>
-          <p className="description mx-auto text-end fs-4">
+        <div style={{ width: "100%", textAlign: "center" }}>
+        <h1
+  className="fw-bold text"
+  style={{
+    width: "95%",
+    margin: "0 auto",
+    fontSize: "clamp(2rem, 16vw, 9rem)", // ✅ 會隨螢幕大小自動縮放
+    whiteSpace: "nowrap",
+  }}
+>
+  Xoskeleton
+</h1>
+
+          <p className="description mx-auto text-center fs-4">
             From Office Battles to Gaming Arenas — One Mouse, Total Victory.
           </p>
-  
+
           <div className="d-flex mt-5">
             <ul className="ms-auto text list-unstyled gap-3 fs-5 text-end">
               <li>Industrial Design</li>
@@ -82,14 +80,29 @@ function Jumbotron() {
               <li>Solo Project • 2025</li>
             </ul>
           </div>
+
+          <img
+            src="/3.webp"
+            alt="Mobile Illustration"
+            style={{
+              width: "80%",
+              marginBottom: "50px",
+              height: "auto",
+            }}
+          />
         </div>
       ) : (
         <div style={{ position: "absolute", top: "20%" }}>
-          <h1 className="text" style={{ fontSize: "9rem" }}>Xoskeleton</h1>
+          <h1
+            className="text"
+            style={{ fontSize: "9rem" }}
+          >
+            Xoskeleton
+          </h1>
           <p className="description mx-auto text-end fs-4">
             From Office Battles to Gaming Arenas — One Mouse, Total Victory.
           </p>
-  
+
           <div className="d-flex mt-5">
             <ul className="ms-auto text list-unstyled gap-3 fs-5 text-end">
               <li>Industrial Design</li>
@@ -102,14 +115,9 @@ function Jumbotron() {
       )}
     </div>
   );
-  
-
 }
 
 export default Jumbotron;
-
-
-
 
 
 

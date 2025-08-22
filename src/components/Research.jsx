@@ -100,7 +100,7 @@ export default function Research() {
                     </div>
                 ))}
             </div>
-            <p className="text-secondary text-end">
+            <p className="text-secondary ">
   <em>Note: These interviews were work-oriented, given my client’s prior expertise in gaming mouse design.</em>
 </p>
             <img src="./sketch.png" alt="" className="d-block mx-auto" />
