@@ -183,6 +183,19 @@ function MultiScreen({ setHoveredProfile }) {
                     boxShadow: "0 0 12px rgba(255, 255, 255, 0.15)",
                   }}
                 >
+             <img
+                src="/top.webp"
+                alt="trigger base"
+                style={{
+                  position: "absolute",
+                  bottom: "-0.6rem",
+                  right: "-0.6rem",
+                  width: "16%",
+                  zIndex: 1001,
+                  pointerEvents: "none",
+                }}
+              />
+        
                   <Card.Body className="px-3 py-2">
                     <p className="text-white small mb-0">
                       {`${screen.label} Profile On`}
