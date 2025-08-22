@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function GameSection({ triggerPreview }) {
   const [isMobile, setIsMobile] = useState(false);
+  const textRef = useRef(null);
 
   useEffect(() => {
     const checkSize = () => setIsMobile(window.innerWidth <= 1150);
@@ -9,6 +14,28 @@ function GameSection({ triggerPreview }) {
     window.addEventListener("resize", checkSize);
     return () => window.removeEventListener("resize", checkSize);
   }, []);
+
+  useEffect(() => {
+    if (isMobile || !textRef.current) {
+      if (textRef.current) textRef.current.style.opacity = 1;
+      return;
+    }
+
+    gsap.set(textRef.current, { opacity: 0 });
+
+    gsap.to(textRef.current, {
+      opacity: 1,
+      duration: 0.8,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: textRef.current,
+        start: "top bottom-=400", // 文字區塊頂端進入視窗底部以上 400px
+        toggleActions: "play none none none",
+        once: true,
+        // markers: true,
+      },
+    });
+  }, [isMobile]);
 
   // 桌機樣式
   const desktopStyle = {
@@ -41,8 +68,9 @@ function GameSection({ triggerPreview }) {
       className="display-section d-flex flex-column"
       style={isMobile ? mobileStyle : desktopStyle}
     >
-      {/* 文字區塊 */}
+      {/* 文字區塊 (GSAP 淡入) */}
       <div
+        ref={textRef}
         className={`p-5 ${isMobile ? "text-end" : "text-end ms-auto"}`}
         style={{
           position: isMobile ? "relative" : "absolute",
@@ -83,7 +111,7 @@ function GameSection({ triggerPreview }) {
         </p>
       </div>
 
-      {/* ✅ 手機/平板 → 顯示 2.png */}
+      {/* ✅ 手機/平板 → 顯示 2.webp */}
       {isMobile ? (
         <img
           src="./2.webp"
@@ -98,7 +126,7 @@ function GameSection({ triggerPreview }) {
           }}
         />
       ) : (
-        // 🖥️ 桌機 → gamingbg.png
+        // 🖥️ 桌機 → gamingbg.webp
         <img
           src="./gamingbg.webp"
           alt="Gaming Illustration"
@@ -118,8 +146,6 @@ function GameSection({ triggerPreview }) {
 }
 
 export default GameSection;
-
-
 
 
 

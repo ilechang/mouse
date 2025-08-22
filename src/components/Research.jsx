@@ -117,9 +117,9 @@ export default function Research() {
                                 src="./logi.webp"
                                 alt="MX Master 3S"
                                 style={{
-                                    width: "230px",
+                                    width: "160px",
                                     height: "auto",
-                                    marginBottom: "3.2rem",
+                                    marginBottom: "2.8rem",
                                     marginTop: "1rem",
                                 }}
                             />
@@ -156,7 +156,7 @@ export default function Research() {
                             <img
                                 src="./ergo.webp"
                                 alt="Logitech MX ERGO S"
-                                style={{ width: "270px", height: "auto", marginBottom: "-0.9rem", marginTop: "-1.5rem", }}
+                                style={{ width: "200px", height: "auto", marginBottom: "0.3rem", marginTop: "-1.5rem", }}
                             />
                             <div style={{
                                 borderLeft: "3px solid rgb(190,190,190)",
@@ -195,7 +195,7 @@ export default function Research() {
                             <img
                                 src="./razer.webp"
                                 alt="Razer Pro Click V2 Vertical"
-                                style={{ width: "180px", height: "auto", marginBottom: "1rem", marginTop: "-1.4rem" }}
+                                style={{ width: "140px", height: "auto", marginBottom: "1rem", marginTop: "-1.4rem" }}
                             />
                             <div style={{
                                 borderLeft: "3px solid rgb(190,190,190)",
@@ -261,7 +261,7 @@ export default function Research() {
 
 
 
-                <div className="text-dark mt-5 mb-3">
+                <div className="text-dark mt-5 mb-5">
                     <h2 className="mt-5 mb-4 text-center text-dark fs-1">Design Goals</h2>
 
                     <div
@@ -357,7 +357,7 @@ export default function Research() {
                     </div>
                 </div>
 
-                <img src="./sketch.jpg" alt="" className="d-block mx-auto w-100 mt-5" />
+                <img src="./sketch.jpg" alt="" className="d-block mx-auto w-75 my-5" />
             </div>
         </div>
     );

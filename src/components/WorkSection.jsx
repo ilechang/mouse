@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function WorkSection() {
   const [isMobile, setIsMobile] = useState(false);
+  const textRef = useRef(null);
 
   useEffect(() => {
     const checkSize = () => setIsMobile(window.innerWidth <= 1150);
@@ -9,6 +14,31 @@ function WorkSection() {
     window.addEventListener("resize", checkSize);
     return () => window.removeEventListener("resize", checkSize);
   }, []);
+
+  useEffect(() => {
+    if (isMobile || !textRef.current) {
+      // 手機板直接顯示，不要動畫
+      if (textRef.current) textRef.current.style.opacity = 1;
+      return;
+    }
+
+    // 初始透明
+    gsap.set(textRef.current, { opacity: 0 });
+
+    // 滾動淡入
+    gsap.to(textRef.current, {
+      opacity: 1,
+      duration: 0.8,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: textRef.current,
+        start: "top bottom-=400", // 文字區塊頂端進入視窗底部以上 200px
+        toggleActions: "play none none none",
+        once: true,
+        // markers: true, // 除錯可開
+      },
+    });
+  }, [isMobile]);
 
   return (
     <div
@@ -19,30 +49,29 @@ function WorkSection() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        height: isMobile ? "auto" : "120vh",   // ✅ 手機/平板不撐滿
+        height: isMobile ? "auto" : "120vh",
         position: "relative",
         flexDirection: isMobile ? "column" : "row",
-        justifyContent: isMobile ? "flex-start" : "flex-start",
+        justifyContent: "flex-start",
         alignItems: isMobile ? "center" : "flex-start",
         paddingTop: isMobile ? "40px" : "0",
-        paddingBottom: isMobile ? "40px" : "0", // ✅ 給手機一點底部空間
+        paddingBottom: isMobile ? "40px" : "0",
       }}
     >
-      {/* 文字區塊 */}
+      {/* 文字區塊（只有這裡淡入） */}
       <div
+        ref={textRef}
         className={`p-5 ${isMobile ? "text-start" : "text-start text-dark"}`}
         style={{
           position: isMobile ? "relative" : "absolute",
           bottom: isMobile ? "auto" : "50%",
           left: isMobile ? "auto" : "35%",
-          transform: isMobile ? "none" : "none",
-          width: isMobile ? "90%" : "450px",   // ✅ 手機 90% 寬度
+          width: isMobile ? "90%" : "450px",
           color: isMobile ? "black" : "inherit",
         }}
       >
         <p className="text-secondary">For Productivity</p>
         <h2 className="fw-bold">Efficient Workflow</h2>
-
         <hr
           style={{
             width: "100%",
@@ -51,10 +80,9 @@ function WorkSection() {
             opacity: 1,
           }}
         />
-
         <p
           style={{
-            textAlign: isMobile ? "left" : "left",
+            textAlign: "left",
             fontSize: "1rem",
             lineHeight: "1.6",
           }}
@@ -65,7 +93,7 @@ function WorkSection() {
         </p>
       </div>
 
-      {/* ✅ 圖片移到下一行 */}
+      {/* 手機板才顯示圖片 */}
       {isMobile && (
         <img
           src="./1.webp"
@@ -84,7 +112,6 @@ function WorkSection() {
 }
 
 export default WorkSection;
-
 
 
 
