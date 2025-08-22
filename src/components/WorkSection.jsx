@@ -27,12 +27,12 @@ function WorkSection() {
 
     // 滾動淡入
     gsap.to(textRef.current, {
-      opacity: 1,
+      opacity: 1.2,
       duration: 0.8,
       ease: "power1.out",
       scrollTrigger: {
         trigger: textRef.current,
-        start: "top bottom-=400", // 文字區塊頂端進入視窗底部以上 200px
+        start: "top bottom-=250", // 文字區塊頂端進入視窗底部以上 200px
         toggleActions: "play none none none",
         once: true,
         // markers: true, // 除錯可開

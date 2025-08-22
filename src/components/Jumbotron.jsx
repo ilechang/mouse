@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 function Jumbotron() {
   const [isMobile, setIsMobile] = useState(false);
@@ -10,11 +7,9 @@ function Jumbotron() {
   // Refs
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
-  const listRef = useRef(null);
-  const imageRef = useRef(null);
-  const rootRef = useRef(null); // 整個 Jumbotron
+  const listRefs = useRef([]); 
 
-  // 螢幕寬度監聽
+  // 畫面寬度監聽
   useEffect(() => {
     const checkSize = () => {
       const vw = window.visualViewport?.width || window.innerWidth;
@@ -29,56 +24,23 @@ function Jumbotron() {
     };
   }, []);
 
-  // 動畫流程
+  // 動畫流程：延遲 1 秒後一次性淡入
   useEffect(() => {
-    if (!titleRef.current || !subtitleRef.current || !listRef.current) return;
+    if (!titleRef.current || !subtitleRef.current) return;
 
-    // reset
-    gsap.set(titleRef.current, { opacity: 0 });
-    gsap.set(subtitleRef.current, { opacity: 0 });
-    gsap.set(listRef.current, { opacity: 0 });
-    if (imageRef.current) gsap.set(imageRef.current, { opacity: 0 });
-
-    const tl = gsap.timeline();
-
-    // 1. 大標延遲 1 秒淡入
-    tl.to(titleRef.current, { opacity: 1, duration: 0.6, ease: "power1.out" }, "+=1");
-
-    // 2. 副標淡入
-    tl.to(subtitleRef.current, { opacity: 1, duration: 0.6, ease: "power1.out" }, "+=0.3");
-
-    // 3. list 一次性淡入
-    tl.to(listRef.current, { opacity: 1, duration: 0.6, ease: "power1.out" }, "+=0.3");
-
-    // 4. (Mobile only) 圖片最後淡入
-    if (imageRef.current) {
-      tl.to(imageRef.current, { opacity: 1, duration: 0.6, ease: "power1.out" }, "+=0.3");
-    }
-
-    // ⭐ ScrollTrigger 控制淡出
-    ScrollTrigger.create({
-      trigger: rootRef.current,
-      start: "top top", // 只是定義開始監控
-      end: "bottom-=400 top", 
-      // ↑ 當 jumbotron bottom 距離瀏覽器頂端還有 400px 時
-      onLeave: () => {
-        gsap.to(
-          [titleRef.current, subtitleRef.current, listRef.current, imageRef.current],
-          { opacity: 0.4, duration: 1, ease: "power1.out" }
-        );
-      },
-      onEnterBack: () => {
-        gsap.to(
-          [titleRef.current, subtitleRef.current, listRef.current, imageRef.current],
-          { opacity: 1, duration: 1, ease: "power1.out" }
-        );
-      },
+    // 全部重置為透明
+    gsap.set([titleRef.current, subtitleRef.current, ...listRefs.current], {
+      opacity: 0,
     });
 
-    return () => {
-      tl.kill();
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
+    // 延遲 1 秒淡入
+    gsap.to([titleRef.current, subtitleRef.current, ...listRefs.current], {
+      opacity: 1,
+      duration: 1,
+      ease: "power1.out",
+      stagger: 0, // 同時
+      delay: 1,   // 延遲 1 秒
+    });
   }, [isMobile]);
 
   const desktopStyle = {
@@ -121,7 +83,10 @@ function Jumbotron() {
   ];
 
   return (
-    <div ref={rootRef} className="jumbotron-section wrapper text-md-end" style={isMobile ? mobileStyle : desktopStyle}>
+    <div
+      className="jumbotron-section wrapper text-md-end"
+      style={isMobile ? mobileStyle : desktopStyle}
+    >
       {isMobile ? (
         <div style={{ width: "100%", textAlign: "center" }}>
           <h1
@@ -136,23 +101,28 @@ function Jumbotron() {
           >
             Xoskeleton
           </h1>
-          <p ref={subtitleRef} className="description mx-auto text-center fs-4">
+          <p
+            ref={subtitleRef}
+            className="description mx-auto text-center fs-4"
+          >
             From Office Battles to Gaming Arenas — One Mouse, Total Victory.
           </p>
 
           <div className="d-flex mt-5">
-            <ul
-              ref={listRef}
-              className="ms-auto text list-unstyled gap-3 fs-5 text-end"
-            >
-              {items.map((t) => (
-                <li key={t}>{t}</li>
+            <ul className="ms-auto text list-unstyled gap-3 fs-5 text-end">
+              {items.map((t, i) => (
+                <li
+                  key={t}
+                  ref={(el) => (listRefs.current[i] = el)}
+                  style={{ opacity: 0 }}
+                >
+                  {t}
+                </li>
               ))}
             </ul>
           </div>
 
           <img
-            ref={imageRef}
             src="/3.webp"
             alt="Mobile Illustration"
             style={{ width: "80%", marginBottom: "50px", height: "auto" }}
@@ -160,20 +130,23 @@ function Jumbotron() {
         </div>
       ) : (
         <div style={{ position: "absolute", top: "20%" }}>
-          <h1 ref={titleRef} className="text mb-0" style={{ fontSize: "9rem" }}>
+          <h1 ref={titleRef} className="text" style={{ fontSize: "9rem", marginBottom:"0" }}>
             Xoskeleton
           </h1>
-          <p ref={subtitleRef} className="description mx-auto mt-0 text-end fs-4 ">
+          <p ref={subtitleRef} className="description mx-auto text-end fs-4  mb-5">
             From Office Battles to Gaming Arenas — One Mouse, Total Victory.
           </p>
 
           <div className="d-flex mt-5">
-            <ul
-              ref={listRef}
-              className="ms-auto text list-unstyled gap-3 fs-5 text-end"
-            >
-              {items.map((t) => (
-                <li key={t}>{t}</li>
+            <ul className="ms-auto text list-unstyled gap-3 fs-5 text-end mt-3">
+              {items.map((t, i) => (
+                <li
+                  key={t}
+                  ref={(el) => (listRefs.current[i] = el)}
+                  style={{ opacity: 0 }}
+                >
+                  {t}
+                </li>
               ))}
             </ul>
           </div>
@@ -184,6 +157,12 @@ function Jumbotron() {
 }
 
 export default Jumbotron;
+
+
+
+
+
+
 
 
 
