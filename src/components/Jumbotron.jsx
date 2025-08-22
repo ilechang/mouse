@@ -163,7 +163,7 @@ function Jumbotron() {
           <h1 ref={titleRef} className="text mb-0" style={{ fontSize: "9rem" }}>
             Xoskeleton
           </h1>
-          <p ref={subtitleRef} className="description mx-auto mt-0 text-end fs-4">
+          <p ref={subtitleRef} className="description mx-auto mt-0 text-end fs-4 ">
             From Office Battles to Gaming Arenas — One Mouse, Total Victory.
           </p>
 
