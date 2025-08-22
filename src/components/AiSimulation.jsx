@@ -241,7 +241,8 @@ ABC Design`;
     backgroundRepeat: "no-repeat",
     backgroundSize: "60vw auto", // 寬度滿版，高度自動
     backgroundPosition: "bottom center", // 貼齊底部、置中
-    paddingBottom: isMobile ? "40px" : "1000px", // 手機給點底部空間
+
+    paddingBottom: isMobile ? "40px" : "1800px", // 手機給點底部空間
   }}
 >
       <h1 className="display-6 fw-bold mb-3 mt-4">
@@ -252,7 +253,7 @@ ABC Design`;
         an input device — it’s your smart assistant.
       </span>
 
-      <div className="vh-40 bg-transparent  d-flex align-items-start sound-section my-5" style={{ paddingBottom:"200px"}}
+      <div className="vh-40 bg-transparent  d-flex align-items-start sound-section my-5" style={{ paddingBottom:"37vh"}}
       >
         <div className="w-100  px-5 d-flex flex-wrap justify-content-center mt-5">
           {/* Small window */}
