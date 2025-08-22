@@ -99,11 +99,7 @@ export default function PhysicalFeatures() {
         </h1>
 
         <span className="text-center mx-auto text-white" style={{ maxWidth: "1000px" }}>
-          The mouse supports the user’s forepalm, allowing the wrist to rest
-          naturally on the desk while leaving a gap in the palm for airflow.
-          Combined with a dual-layer structure and ventilation ports, it
-          enhances overall breathability and comfort, keeping the hand dry even
-          during extended use.
+        Xoskeleton supports the user’s forepalm, allowing the wrist to rest naturally on the desk while leaving a gap in the palm for airflow. Combined with a dual-layer structure, ventilation ports, and a matte finish with rubberized grips, it enhances overall breathability, comfort, and sweat resistance — keeping the hand dry even during extended use.
         </span>
       </div>
     </div>

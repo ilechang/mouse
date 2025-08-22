@@ -158,6 +158,7 @@ ABC Design`;
       ScrollTrigger.create({
         trigger: imgRef.current,
         start: "bottom bottom",
+        once: true, 
         onEnter: () => {
           gsap.to(triggerImgRef.current, {
             delay: 0.8,
@@ -233,7 +234,16 @@ ABC Design`;
   }, [isMobile]);
 
   return (
-    <div className="bg-white text-dark text-center py-5">
+<div
+  className="bg-white text-dark text-center py-5"
+  style={{
+    backgroundImage: 'url("./end.webp")',
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "60vw auto", // 寬度滿版，高度自動
+    backgroundPosition: "bottom center", // 貼齊底部、置中
+    paddingBottom: isMobile ? "40px" : "1000px", // 手機給點底部空間
+  }}
+>
       <h1 className="display-6 fw-bold mb-3 mt-4">
         Talk to AI with just one click.
       </h1>
@@ -242,8 +252,9 @@ ABC Design`;
         an input device — it’s your smart assistant.
       </span>
 
-      <div className="vh-50 d-flex align-items-start sound-section my-5">
-        <div className="w-100 bg-white px-5 d-flex flex-wrap justify-content-center mt-5">
+      <div className="vh-40 bg-transparent  d-flex align-items-start sound-section my-5" style={{ paddingBottom:"200px"}}
+      >
+        <div className="w-100  px-5 d-flex flex-wrap justify-content-center mt-5">
           {/* Small window */}
           <div
             style={{
@@ -331,7 +342,7 @@ ABC Design`;
                     }}
                   >
                     <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
-                      <span className="small">Mouse’s AI Chat Window</span>
+                      <span className="small">Ask X'S AI</span>
                       <span style={{ cursor: "pointer" }}>×</span>
                     </Card.Header>
 
