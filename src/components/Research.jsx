@@ -91,7 +91,7 @@ export default function Research() {
 
 
                 <div className="text-dark">
-                    <h2 className="mb-4 text-dark text-center mt-5 mb-0 fs-1">Competitor Analysis</h2>
+                    <h2 className="mb-4 text-dark text-center mt-5 mb-0 fs-1">Market Research</h2>
                     <p className='text-center'>To evaluate the feasibility of crossing over from gaming mice to productivity mice, we analyzed leading work-oriented models and explored how to integrate more productivity tools while retaining the sleek gaming aesthetics, enabling the mouse to meet the needs of both gaming and work.</p>
                     <div
                         style={{
@@ -136,7 +136,8 @@ export default function Research() {
                                 </ul>
                                 <strong>Weaknesses:</strong>
                                 <ul>
-                                    <li>Large and heavy, not ideal for portability.</li>
+                                    <li>Users with small hands found the mouse too big to handle comfortably.</li>
+                                    <li>Bulky and heavy, not ideal for portability.</li>
                                     <li>Auto profile switching cannot handle multi-monitor workflows with multiple apps open simultaneously.</li>
                                 </ul>
                             </div>

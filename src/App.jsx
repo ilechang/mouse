@@ -6,7 +6,7 @@ import MultiScreen from "./components/MultiScreen";
 import Research from "./components/Research.jsx";
 import R3FViewer from "./components/R3FViewer";
 import { AiSimulation } from "./components/AiSimulation";
-
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import MouseMacroPage from "./components/MouseMacroPage";
 import PhysicalFeatures from "./components/PhysicalFeatures";
 import AdjustableWidth from "./components/AdjustableWidth";

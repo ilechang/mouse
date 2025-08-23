@@ -343,7 +343,7 @@ ABC Design`;
                     }}
                   >
                     <Card.Header className="bg-secondary py-2 px-3 d-flex justify-content-between align-items-center">
-                      <span className="small">Ask X'S AI</span>
+                      <span className="small">Ask X's AI</span>
                       <span style={{ cursor: "pointer" }}>×</span>
                     </Card.Header>
 
@@ -368,7 +368,7 @@ ABC Design`;
                           <Button variant="secondary">↑</Button>
                         </InputGroup>
 
-                        <p className="small mb-1">Suggested Prompts:</p>
+                        <p className="small mb-1">Suggested Prompts ( Based on Clipboard ):</p>
                         <div
                           className="d-flex flex-wrap gap-2 mb-3"
                           ref={(el) => (btnContainerRef.current = el)}

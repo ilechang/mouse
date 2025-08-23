@@ -208,7 +208,7 @@ function MultiScreen({ setHoveredProfile }) {
         ))}
       </div>
 
-      <h1 className="mx-auto text-center text-white fw-bold mb-3">Automatic Profile Switching</h1>
+      <h1 className="mx-auto text-center text-white fw-bold mb-3">Multi-Monitor Automatic Profile Switching</h1>
       <p className="mx-auto text-white text-center mb-4" style={{ maxWidth: "1000px" }}>
         The mouse delivers a seamless experience by automatically detecting which application your cursor is on across wide or multi-monitor setups, and instantly switching to the corresponding profile.
       </p>
