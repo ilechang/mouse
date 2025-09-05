@@ -30,7 +30,7 @@ const Loader = () => (
         justifyContent: "center",
         alignItems: "center",
         height: "100%",
-        background: "rgba(0,0,0,0.85)",
+       
       }}
     >
       <div
