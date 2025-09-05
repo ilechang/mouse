@@ -53,9 +53,9 @@ function Jumbotron() {
         listRefs.current,
         {
           opacity: 1,
-          duration: 0.6,
+          duration: 0.07,
           ease: "power2.out",
-          stagger: 0.2,
+          stagger: 0.07,
         },
         "-=0.2"
       );
