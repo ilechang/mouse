@@ -56,24 +56,23 @@ export default function MouseProfile({ hoveredProfile, committedProfile }) {
         {profileOptions.map(({ key, label }) => {
           const isActive = displayProfile === key;
           return (
-            // <button
-            //   key={key}
-            //   className={`btn btn-sm px-4 py-2 mx-2 ${isActive ? "text-dark" : "btn-outline-light"
-            //     }`}
-            //   style={{
-            //     backgroundColor: isActive ? "#fff" : "transparent",
-            //     borderColor: "#fff",
-            //     color: isActive ? "black" : "#fff",
-            //     boxShadow: isActive
-            //       ? "0 0 30px rgba(0, 123, 255)"
-            //       : "none",
-            //     transition: "all 0.2s ease-in-out",
+            <button
+              key={key}
+              className={`btn btn-sm px-4 py-2 mx-2 ${isActive ? "text-dark" : "btn-outline-light"
+                }`}
+              style={{
+                backgroundColor: isActive ? "#fff" : "transparent",
+                borderColor: "#fff",
+                color: isActive ? "black" : "#fff",
+                boxShadow: isActive
+                  ? "0 0 30px rgba(0, 123, 255)"
+                  : "none",
+                transition: "all 0.2s ease-in-out",
 
-            //   }}
-            // >
-            //   {label}
-            // </button>
-            <></>
+              }}
+            >
+              {label}
+            </button>
           );
         })}
       </div>
