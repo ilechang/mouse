@@ -144,7 +144,17 @@ function Jumbotron() {
           />
         </div>
       ) : (
-        <div style={{ position: "absolute", top: "20%" }}>
+        <div
+          style={{
+            position: "absolute",
+            top: "15%",
+            maxWidth: "50%",
+            right: "clamp(0.5rem,10vw,15rem)", // 控制與螢幕右邊距離
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end", // ✅ 全部跟右邊對齊
+          }}
+        >
           <h1
             ref={titleRef}
             className="text"
@@ -152,28 +162,33 @@ function Jumbotron() {
           >
             Xoskeleton
           </h1>
+
           <p
             ref={subtitleRef}
-            className="description mx-auto text-end fs-4  mb-5"
+            className="description fs-4 me-0 pe-0"
+            style={{ textAlign: "right" }} // ✅ 改成 right，配合 flex-end
           >
             From Office Battles to Gaming Arenas — One Mouse, Total Victory.
           </p>
 
-          <div className="d-flex mt-5">
-            <ul className="ms-auto text list-unstyled gap-3 fs-5 text-end mt-3">
-              {items.map((t, i) => (
-                <li
-                  key={t}
-                  ref={(el) => (listRefs.current[i] = el)}
-                  style={{ opacity: 0 }}
-                >
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul
+            className="text list-unstyled gap-3 fs-5 mt-3"
+            style={{ textAlign: "right" }}
+          >
+            {items.map((t, i) => (
+              <li
+                key={t}
+                ref={(el) => (listRefs.current[i] = el)}
+                style={{ opacity: 0 }}
+              >
+                {t}
+              </li>
+            ))}
+          </ul>
         </div>
+
       )}
+
     </div>
   );
 }
@@ -198,7 +213,7 @@ export default Jumbotron;
 //   // Refs
 //   const titleRef = useRef(null);
 //   const subtitleRef = useRef(null);
-//   const listRefs = useRef([]); 
+//   const listRefs = useRef([]);
 
 //   // 畫面寬度監聽
 //   useEffect(() => {

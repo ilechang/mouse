@@ -451,3 +451,14 @@ nav .link-styled {
     opacity: 0.6; /* 可選，讓它有點透明感 */
   }
 }
+
+
+/* styles.css */
+@media (min-width: 1050px) {
+  .jumbotron-section .text,
+  .jumbotron-section .description,
+  .jumbotron-section ul,
+  .jumbotron-section li {
+    margin-right: 1rem !important;
+  }
+}
