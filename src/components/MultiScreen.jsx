@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Card } from "react-bootstrap";
 import gsap from "gsap";
 
-function MultiScreen({ setHoveredProfile }) {
+function MultiScreen({ onProfileChange }) {
   const screens = [
     {
       label: "LoL",
@@ -30,28 +30,14 @@ function MultiScreen({ setHoveredProfile }) {
     },
   ];
 
-  const defaultHover = screens.map((_, idx) => idx === 0);
-  const [hovered, setHovered] = useState(defaultHover);
-  const [showCard, setShowCard] = useState(() => screens.map(() => false));
+  const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-
   const cardRefs = useRef(screens.map(() => React.createRef()));
-  const hideTimers = useRef(screens.map(() => null));
 
   useEffect(() => {
     const checkSize = () => {
       const mobile = (window.visualViewport?.width || window.innerWidth) <= 1150;
       setIsMobile(mobile);
-
-      if (mobile) {
-        // ✅ 手機 → 固定 Photoshop 亮，但不顯示卡片
-        setHovered(screens.map((_, idx) => idx === 1));
-        setShowCard(screens.map(() => false));
-        if (setHoveredProfile) setHoveredProfile(screens[1].profileKey);
-      } else {
-        setHovered(defaultHover);
-        setShowCard(screens.map(() => false));
-      }
     };
     checkSize();
     window.visualViewport?.addEventListener("resize", checkSize);
@@ -61,60 +47,37 @@ function MultiScreen({ setHoveredProfile }) {
       window.visualViewport?.removeEventListener("resize", checkSize);
       window.removeEventListener("resize", checkSize);
     };
-  }, [setHoveredProfile]);
-
-  useEffect(() => {
-    cardRefs.current.forEach((ref) => {
-      gsap.set(ref.current, {
-        opacity: 0,
-        y: 20,
-        x: 20,
-        scale: 0.8,
-        transformOrigin: "bottom right",
-      });
-    });
   }, []);
 
+  // ✅ 自動循環亮起
   useEffect(() => {
-    showCard.forEach((visible, i) => {
-      const ref = cardRefs.current[i];
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % screens.length);
+    }, 1200);
+    return () => clearInterval(interval);
+  }, [screens.length]);
+
+  // ✅ 當 activeIndex 變化 → 通知父層
+  useEffect(() => {
+    if (onProfileChange) {
+      onProfileChange(screens[activeIndex].profileKey);
+    }
+  }, [activeIndex]);
+
+  // ✅ GSAP 動畫
+  useEffect(() => {
+    cardRefs.current.forEach((ref, i) => {
       if (!ref.current) return;
       gsap.to(ref.current, {
-        opacity: visible ? 1 : 0,
-        y: visible ? 0 : 20,
-        x: visible ? 0 : 20,
-        scale: visible ? 1 : 0.8,
-        duration: 0.3,
+        opacity: activeIndex === i ? 1 : 0,
+        y: activeIndex === i ? 0 : 20,
+        x: activeIndex === i ? 0 : 20,
+        scale: activeIndex === i ? 1 : 0.8,
+        duration: 0.4,
         ease: "power2.out",
       });
     });
-  }, [showCard]);
-
-  const clearTimer = (i) => {
-    if (hideTimers.current[i]) {
-      clearTimeout(hideTimers.current[i]);
-      hideTimers.current[i] = null;
-    }
-  };
-
-  const handleMouseEnter = (i) => {
-    if (isMobile) return;
-    setHovered(screens.map((_, idx) => idx === i));
-    clearTimer(i);
-    setShowCard((prev) => prev.map((v, idx) => (idx === i ? true : v)));
-    hideTimers.current[i] = setTimeout(() => {
-      setShowCard((prev) => prev.map((v, idx) => (idx === i ? false : v)));
-    }, 1200);
-    if (setHoveredProfile) setHoveredProfile(screens[i].profileKey);
-  };
-
-  const handleMouseLeave = (i) => {
-    if (isMobile) return;
-    setHovered(defaultHover);
-    clearTimer(i);
-    setShowCard((prev) => prev.map((v, idx) => (idx === i ? false : v)));
-    if (setHoveredProfile) setHoveredProfile(null);
-  };
+  }, [activeIndex]);
 
   return (
     <div style={{ backgroundColor: "rgb(31,31,31)", padding: "0rem 0rem 4rem 0rem" }}>
@@ -129,7 +92,7 @@ function MultiScreen({ setHoveredProfile }) {
           padding: "0rem",
           flexWrap: "nowrap",
           overflowX: isMobile ? "auto" : "visible",
-          marginBottom: isMobile ? "3rem" : "0", // ✅ 手機增加圖片與下方文字的間距
+          marginBottom: isMobile ? "3rem" : "0",
         }}
       >
         {screens.map((screen, i) => (
@@ -141,16 +104,14 @@ function MultiScreen({ setHoveredProfile }) {
             }}
           >
             <div
-              onMouseEnter={() => handleMouseEnter(i)}
-              onMouseLeave={() => handleMouseLeave(i)}
               style={{
                 ...(!isMobile && screen.marginStyle),
                 transform: isMobile ? "scale(0.9)" : screen.transformStyle,
                 position: "relative",
-                zIndex: hovered[i] ? 200 : 1,
-                boxShadow: hovered[i] ? "0 0 20px 5px rgba(0, 123, 255, 0.9)" : "none",
+                zIndex: activeIndex === i ? 200 : 1,
+                boxShadow:
+                  activeIndex === i ? "0 0 20px 5px rgba(0, 123, 255, 0.9)" : "none",
                 transition: "box-shadow 0.3s ease, z-index 0s",
-                cursor: isMobile ? "default" : "pointer",
               }}
             >
               <img
@@ -162,8 +123,8 @@ function MultiScreen({ setHoveredProfile }) {
                 }}
               />
 
-              {/* ✅ 桌機 hover 卡片；手機不顯示卡片 */}
-              {!isMobile && showCard[i] && (
+              {/* ✅ 桌機自動亮起時顯示卡片；手機不顯示卡片 */}
+              {!isMobile && (
                 <Card
                   ref={cardRefs.current[i]}
                   className="position-absolute text-white"
@@ -178,28 +139,26 @@ function MultiScreen({ setHoveredProfile }) {
                     maxHeight: "90%",
                     zIndex: 1000,
                     opacity: 0,
-                    pointerEvents: "auto",
+                    pointerEvents: "none",
                     fontSize: "0.8rem",
                     boxShadow: "0 0 12px rgba(255, 255, 255, 0.15)",
                   }}
                 >
-             <img
-                src="/top.webp"
-                alt="trigger base"
-                style={{
-                  position: "absolute",
-                  bottom: "-0.6rem",
-                  right: "-0.6rem",
-                  width: "16%",
-                  zIndex: 1001,
-                  pointerEvents: "none",
-                }}
-              />
-        
+                  {/* 🔹 把 top.webp 加回來 */}
+                  <img
+                    src="/top.webp"
+                    alt="trigger base"
+                    style={{
+                      position: "absolute",
+                      bottom: "-0.6rem",
+                      right: "-0.6rem",
+                      width: "16%",
+                      zIndex: 1001,
+                      pointerEvents: "none",
+                    }}
+                  />
                   <Card.Body className="px-3 py-2">
-                    <p className="text-white small mb-0">
-                      {`${screen.label} Profile On`}
-                    </p>
+                    <p className="text-white small mb-0">{`${screen.label} Profile On`}</p>
                   </Card.Body>
                 </Card>
               )}
@@ -208,15 +167,30 @@ function MultiScreen({ setHoveredProfile }) {
         ))}
       </div>
 
-      <h1 className="mx-auto text-center text-white fw-bold mb-3">Multi-Monitor Automatic Profile Switching</h1>
-      <p className="mx-auto text-white text-center mb-4" style={{ maxWidth: "1000px" }}>
-        The mouse delivers a seamless experience by automatically detecting which application your cursor is on across wide or multi-monitor setups, and instantly switching to the corresponding profile.
+      <h1 className="mx-auto text-center text-white fw-bold mb-3">
+        Multi-Monitor Automatic Profile Switching
+      </h1>
+      <p
+        className="mx-auto text-white text-center mb-4"
+        style={{ maxWidth: "1000px" }}
+      >
+        The mouse delivers a seamless experience by automatically detecting which
+        application your cursor is on across wide or multi-monitor setups, and
+        instantly switching to the corresponding profile.
       </p>
     </div>
   );
 }
 
 export default MultiScreen;
+
+
+
+
+
+
+
+
 
 
 

@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     const checkSize = () => {
-      setIsMobileOrTablet(window.innerWidth <= 1150); 
+      setIsMobileOrTablet(window.innerWidth <= 1150);
       // 這裡 1150 可依需求調整，通常 < 1024/768 就算平板或手機
     };
 
@@ -69,11 +69,12 @@ function App() {
       <AdjustableWidth />
 
       <div style={{ position: "relative", zIndex: 2000 }}>
-        <MouseMacroPage
-          hoveredProfile={hoveredProfile}
-          committedProfile={committedProfile}
-        />
-        <MultiScreen setHoveredProfile={setHoveredProfile} />
+
+
+        <MouseMacroPage hoveredProfile={hoveredProfile} />
+
+
+        <MultiScreen onProfileChange={setHoveredProfile} />
         <AiSimulation />
       </div>
     </>
